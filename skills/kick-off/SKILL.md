@@ -7,9 +7,10 @@ description: This skill should be used when starting a brand new project (empty 
 
 Runs on an empty/near-empty project directory (new project) or to scope a new milestone in an existing codebase. Turns a rough idea into a confirmed spec — does not implement anything.
 
-## 1. Set up `.project/`
+## 1. Set up project files
 
-- Create if missing: `Inbox/`, `Archive/`, `Tickets/`, `Knowledge/`, `Branding/Assets/`, `Reports/`.
+- Create if missing: `.project/Inbox/`, `.project/Archive/`, `.project/Tickets/`, `.project/Knowledge/`, `.project/Branding/Assets/`, `.project/Reports/`.
+- Create if missing: root `CLAUDE.md`, copied verbatim from this skill's `references/CLAUDE.md.template`; and root `AGENTS.md` containing just `Read CLAUDE.md.`. Never overwrite either if it already exists.
 - If a codebase exists, read the README, manifests, source layout, `.project/SPEC.md`, and `.project/Tickets/*` first. Anything discoverable this way is a **fact** — never ask the user for it.
 
 ## 2. Map the decision tree

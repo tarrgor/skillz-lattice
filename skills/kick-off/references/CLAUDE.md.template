@@ -1,0 +1,23 @@
+# CLAUDE.md
+
+## Workflow
+
+Spec-driven development via bespecific skills:
+
+- kick-off — idea → confirmed `.project/SPEC.md`
+- create-spec-issues — spec → GitHub issues / `.project/Tickets/`
+- implement-issue — issue → branch, code, PR
+- verify-implementation — PR → review comments
+- check-pr-comments — feedback → fixes
+- merge-pr — approved PR → `develop`
+- project-meeting — recurring status meeting, triages `.project/Inbox/`
+- generate-branding — on demand: brand guide + assets in `.project/Branding/`
+
+## `.project/`
+
+- `SPEC.md` — confirmed spec
+- `Tickets/` — milestone specs, markdown-fallback issues
+- `Reports/` — completion reports
+- `Inbox/` / `Archive/` — findings awaiting / resolved
+- `Knowledge/` — durable learnings by topic
+- `Branding/` — brand guide (`BRAND.md`) and generated assets
