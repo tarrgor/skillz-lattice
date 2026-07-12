@@ -1,6 +1,6 @@
 # bespecific
 
-A set of [Claude Code](https://claude.com/claude-code) skills that implement a **spec-driven development** workflow: turn a rough idea into a confirmed spec, break it into issues, implement and review each one, and keep a running log of decisions and knowledge — all with you in the loop for every decision that matters.
+A set of AI coding agent skills that implement a **spec-driven development** workflow: turn a rough idea into a confirmed spec, break it into issues, implement and review each one, and keep a running log of decisions and knowledge — all with you in the loop for every decision that matters. Written for [Claude Code](https://claude.com/claude-code) but not specific to it — any agent that supports skills can use them.
 
 ## The workflow
 
