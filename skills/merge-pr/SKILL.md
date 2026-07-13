@@ -19,7 +19,7 @@ Merges an approved PR into `develop` and cleans up the branch — does not revie
 
 ## 3. Merge and delete the branch
 
-- `gh pr merge <number> --delete-branch`, using the repo's configured merge method (ask if more than one is enabled and it's unclear which to use).
+- `gh pr merge <number> --squash --delete-branch`. Always use the squash merge method.
 - Confirm the remote branch was deleted; if `--delete-branch` didn't remove it, delete it explicitly.
 
 ## 4. Clean up locally
