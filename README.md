@@ -1,4 +1,4 @@
-# bespecific - An agentic coding workflow
+# skillz-lattice - An agentic coding workflow
 
 A set of AI coding agent skills that implement a **spec-driven development** workflow: turn a rough idea into a confirmed spec, break it into issues, implement and review each one, and keep a running log of decisions and knowledge — all with you in the loop for every decision that matters. Written for [Claude Code](https://claude.com/claude-code) but not specific to it — any agent that supports skills can use them.
 
@@ -48,7 +48,7 @@ Skills live in a plain top-level `skills/` folder rather than `.claude/skills/`,
 - **Copy** the `skills/<name>/` folders into your agent's skills directory (e.g. `.claude/skills/` for Claude Code), or
 - **Symlink** them there instead, pointing back at this repo — so updates here stay in sync:
   ```bash
-  ln -s /path/to/bespecific/skills/kick-off .claude/skills/kick-off
+  ln -s /path/to/skillz-lattice/skills/kick-off .claude/skills/kick-off
   ```
 
 Once available, just tell your agent what you want in plain language — e.g. *"kick off this project"*, *"implement issue #12"*, *"let's have a project meeting"*.
