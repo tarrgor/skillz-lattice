@@ -57,7 +57,8 @@ Follow this workflow end to end. Keep the user informed at important transitions
 ## 7. Publish
 
 - Commit only the issue-related changes, with a message referencing the issue.
-- GitHub available: push the branch and open a non-draft PR targeting `develop`, including a summary, the verification commands that passed, and `Closes #<number>`.
+- GitHub available: push the branch and open a non-draft PR targeting `develop`, with a summary and the verification commands that passed.
+- **The PR body must include `Closes #<number>` on its own line** so GitHub auto-closes the issue on merge. Verify this line is present in the created PR before reporting completion — do not rely on a generic PR template to add it.
 - GitHub unavailable: push the branch if a remote exists, otherwise leave it ready locally; note completion back to the user instead of a PR link.
 
 ## 8. Report completion
