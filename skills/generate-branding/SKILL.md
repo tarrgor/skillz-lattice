@@ -14,7 +14,7 @@ Runs standalone, on demand. Produces or updates a brand identity guide and visua
 
 ## 2. Gather context
 
-- Read `.project/SPEC.md` and the newest `.project/Tickets/SPEC-*.md`, if present, for project name, audience, positioning, and tone. Anything found there is a fact — never ask for it. Neither file is required; proceed without them if absent.
+- Read `.project/SPEC.md` and the highest-numbered `.project/SPEC-milestone-*.md`, if present, for project name, audience, positioning, and tone. Anything found there is a fact — never ask for it. Neither file is required; proceed without them if absent.
 - On a partial update, also read the existing `BRAND.md` in full and reuse its unaffected decisions (palette, type, voice) as fact.
 
 ## 3. Map the decision tree

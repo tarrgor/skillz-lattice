@@ -20,8 +20,8 @@ Moderates a recurring project status meeting — does not touch code. Every deci
 
 ## 3. Triage the Inbox, one finding at a time
 
-- Process each file in `.project/Inbox/` individually: present it, propose an outcome (new issue, `.project/SPEC.md` amendment, no action, or something else), and wait for the user's decision before moving to the next finding.
-- On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend `.project/SPEC.md`, or discard — then move the finding's file to `.project/Archive/`.
+- Process each file in `.project/Inbox/` individually: present it, propose an outcome (new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else), and wait for the user's decision before moving to the next finding.
+- On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, or discard — then move the finding's file to `.project/Archive/`.
 - Never batch findings or decide more than one at a time.
 
 ## 4. Plan next steps

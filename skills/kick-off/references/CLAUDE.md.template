@@ -8,8 +8,9 @@
 
 ## `.project/`
 
-- `SPEC.md` — confirmed spec
-- `Tickets/` — milestone specs, markdown-fallback issues
+- `SPEC.md` — confirmed project vision
+- `SPEC-milestone-<###>-<slug>.md` — confirmed spec per milestone
+- `Tickets/` — markdown-fallback issues (only used without GitHub)
 - `Reports/` — completion reports
 - `Inbox/` / `Archive/` — findings awaiting / resolved
 - `Knowledge/` — durable learnings by topic

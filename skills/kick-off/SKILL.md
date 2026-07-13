@@ -11,7 +11,7 @@ Runs on an empty/near-empty project directory (new project) or to scope a new mi
 
 - Create if missing: `.project/Inbox/`, `.project/Archive/`, `.project/Tickets/`, `.project/Knowledge/`, `.project/Branding/Assets/`, `.project/Reports/`.
 - Create if missing: root `CLAUDE.md`, copied verbatim from this skill's `references/CLAUDE.md.template`; and root `AGENTS.md` containing just `Read CLAUDE.md.`. Never overwrite either if it already exists.
-- If a codebase exists, read the README, manifests, source layout, `.project/SPEC.md`, and `.project/Tickets/*` first. Anything discoverable this way is a **fact** — never ask the user for it.
+- If a codebase exists, read the README, manifests, source layout, `.project/SPEC.md`, and any `.project/SPEC-milestone-*.md` first. Anything discoverable this way is a **fact** — never ask the user for it.
 
 ## 2. Map the decision tree
 
@@ -31,6 +31,8 @@ Summarize the full plan. Do not write anything until the user explicitly confirm
 
 ## 5. Write the spec
 
-- New project: `.project/SPEC.md` — the idea, all decisions, all discovered facts.
-- New milestone: `.project/Tickets/SPEC-<milestone-slug>.md` instead, leaving `.project/SPEC.md` untouched.
+- `.project/SPEC.md` holds only the project vision: problem/goal, target users, architecture/stack, non-functional requirements, long-term roadmap. It changes rarely — later changes are amendments, not rewrites.
+- `.project/SPEC-milestone-<###>-<slug>.md` holds one milestone's concrete detail: scope (in/out), workflows, data model, acceptance-level detail. Number sequentially, zero-padded to 3 digits (`001`, `002`, ...) — find the highest existing `SPEC-milestone-<###>-*.md` directly under `.project/` and use `+1`, starting at `001`.
+- New project: write both `.project/SPEC.md` and the first milestone spec (`SPEC-milestone-001-<slug>.md`).
+- New milestone in an existing codebase: write only the next milestone spec; leave `.project/SPEC.md` untouched unless the vision itself changed, in which case amend it rather than rewriting it.
 - Documentation only — do not implement the plan.

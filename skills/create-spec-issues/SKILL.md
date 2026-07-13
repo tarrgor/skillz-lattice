@@ -1,6 +1,6 @@
 ---
 name: create-spec-issues
-description: This skill should be used after a kick-off interview has produced a confirmed spec (`.project/SPEC.md` for a new project, or a new `.project/Tickets/SPEC-<milestone>.md` for a milestone) and that spec's work needs to be broken into actionable issues. Trigger phrases include "create issues from this spec", "break this spec into tickets", "turn the spec into issues", "spec this out into work items", or whenever a freshly confirmed spec needs to be decomposed into implementable units of work.
+description: This skill should be used after a kick-off interview has produced a confirmed spec (`.project/SPEC.md` for a new project, or a new `.project/SPEC-milestone-<###>-<slug>.md` for a milestone) and that spec's work needs to be broken into actionable issues. Trigger phrases include "create issues from this spec", "break this spec into tickets", "turn the spec into issues", "spec this out into work items", or whenever a freshly confirmed spec needs to be decomposed into implementable units of work.
 ---
 
 # Create Spec Issues
@@ -9,7 +9,7 @@ Runs after kick-off produces a confirmed spec. Decomposes it into one issue per 
 
 ## 1. Find the spec
 
-Use the most recently created spec file: newest-by-mtime `.project/Tickets/SPEC-*.md` if any exist, else `.project/SPEC.md`. Read it thoroughly.
+Use the highest-numbered `.project/SPEC-milestone-<###>-*.md` if any exist, else `.project/SPEC.md`. Read it thoroughly — if a milestone spec is in play, also skim `.project/SPEC.md` for project vision and constraints not repeated in the milestone spec.
 
 ## 2. Check for GitHub
 
