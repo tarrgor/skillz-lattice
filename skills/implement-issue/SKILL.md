@@ -29,6 +29,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 - Read any project instruction file (`CLAUDE.md`, `AGENTS.md`) and the relevant code/tests before acting.
 - Fetch the issue's title, body, labels, linked context, and all comments (`gh issue view <number> --comments`).
 - If the issue touches UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md` and `.project/Branding/Assets/`, if present, and implement against them (palette, typography, voice, logo/asset usage) — don't invent brand decisions the guide already made.
+- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. Anything you do read (a convention, a gotcha, a past decision) is binding for this implementation.
 - Restate the acceptance criteria internally; do not implement from the title alone.
 - If something genuinely blocks a correct implementation (not resolvable from the codebase or convention), post one concise comment on the issue explaining the ambiguity, then stop and wait. Resume once answered.
 

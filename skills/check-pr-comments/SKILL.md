@@ -18,6 +18,7 @@ Addresses review feedback on an issue that's already implemented — does not re
 - Read the original issue in full — its acceptance criteria are the triage checklist.
 - Fetch the feedback: all PR comments and unresolved review threads (`gh pr view <number> --comments`).
 - If the feedback concerns UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md`, if present, and fix against it — don't invent brand decisions the guide already made.
+- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to the feedback's area. Never read the tree wholesale; if nothing matches, skip it. A comment that contradicts a captured convention is worth flagging in the reply rather than silently following.
 
 ## 3. Triage and fix
 
