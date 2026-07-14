@@ -69,11 +69,13 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 ## 9. Independent review
 
 - Launch the `verify-implementation` agent as a subagent (Agent tool, `subagent_type: verify-implementation`, `run_in_background: false`) so it reviews with its own fresh context. Give it the issue number and the PR number.
-- Wait for it to finish — do not proceed, merge, or report done while it is running.
+- Wait for it to finish — do not proceed, merge, or report done while it is running. It returns its findings directly in its final message; it does not post to the PR.
 
 ## 10. Address the review findings
 
-- Findings returned: use the `check-pr-comments` skill on the same issue/PR to triage and fix them, then re-run the project's build/test commands.
+- Findings returned: judge each one against the issue's acceptance criteria — valid and actionable, or not. For anything not actionable, note why instead of acting on it.
+- For each valid finding, make the fix, then re-run the project's build/test commands; fix failures before proceeding.
+- Commit and push the fixes to the existing branch.
 - No findings: say so and stop; do not re-run the review or invent work.
 
 ## Failure handling

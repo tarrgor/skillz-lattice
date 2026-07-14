@@ -32,3 +32,8 @@ Moderates a recurring project status meeting — does not touch code. Every deci
 ## 5. Record the meeting
 
 Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its resolved outcome, work completed, knowledge gained, and next steps agreed. This is the marker the next meeting's Step 1 reads from.
+
+## 6. Commit and push
+
+- Stage only `.project/` (moved Inbox files, spec amendments, the new meeting record) — never unrelated changes sitting in the working tree.
+- Commit with a message summarizing the meeting (date, findings resolved, decisions made), then push to the current branch's upstream.

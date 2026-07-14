@@ -31,5 +31,6 @@ Report only concrete, verifiable findings — not stylistic preference.
 
 ## 4. Report findings
 
-- Post each finding as a PR comment (`gh pr comment <number> --body "..."`, or an inline review comment via `gh api` when it ties to a specific line). Reference the acceptance criterion or line it relates to.
-- No findings: post a short note that the review passed, stating which criteria were checked.
+- Do not post to the PR. Return the findings directly to whatever invoked this skill, as the final output — that caller is responsible for anything further.
+- For each finding: the acceptance criterion or file/line it relates to, what's wrong, and why it matters. Group by acceptance criteria / correctness / security.
+- No findings: say so explicitly, stating which criteria were checked.
