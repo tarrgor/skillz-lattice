@@ -35,3 +35,9 @@ git pull --ff-only
 ## 5. Report
 
 Confirm the merge, the branch deletion (remote and local), and that the base branch is up to date. Note the issue this closed.
+
+## 6. Check the Inbox
+
+- List `.project/Inbox/findings-*.md` (skip if the folder is absent or empty).
+- Recommend the user run a project meeting (`project-meeting`) if either holds: any finding is critical — needs immediate attention (e.g. security risk, data loss, broken build, blocker for other work) — or there are three or more findings pending.
+- Keep it to a brief hint at the end of the report; name the critical finding(s) or the count. Do not open, triage, or act on the findings here — that is the project meeting's job.
