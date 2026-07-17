@@ -18,22 +18,30 @@ Moderates a recurring project status meeting — does not touch code. Every deci
 - Summarize new knowledge captured, from `.project/Knowledge/`.
 - Informational only — no decisions needed here, just present it.
 
-## 3. Triage the Inbox, one finding at a time
+## 3. Spot-check Knowledge currency
 
-- Process each file in `.project/Inbox/` individually: present it, propose an outcome (new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else), and wait for the user's decision before moving to the next finding.
-- On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, or discard — then move the finding's file to `.project/Archive/`.
+- List `.project/Knowledge/**`. Skip entries recording a pure convention or decision — nothing there to go stale. For entries asserting a specific, checkable state ("X is unfixed", "Y isn't supported yet"), re-verify against the current code or issue tracker.
+- Anything contradicted: treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede, one at a time, same discipline.
+- This is a full sweep, not scoped to "since last meeting" — staleness accumulates precisely in entries nobody has touched recently.
+
+## 4. Triage findings, one at a time
+
+- Process each file in `.project/Inbox/`, plus each stale Knowledge entry flagged in Step 3, individually: present it, propose an outcome, and wait for the user's decision before moving to the next finding.
+  - Inbox findings: new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else.
+  - Stale Knowledge entries: update the entry, archive/delete it, or leave as-is.
+- On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, edit or remove the Knowledge entry, or discard — then move any consumed Inbox file to `.project/Archive/`.
 - Never batch findings or decide more than one at a time.
 
-## 4. Plan next steps
+## 5. Plan next steps
 
-- Discuss upcoming work, new ideas, or changes — raised by either party — one topic at a time, same discipline as Step 3.
+- Discuss upcoming work, new ideas, or changes — raised by either party — one topic at a time, same discipline as Step 4.
 - Any resulting action (new issue, spec change, milestone) requires explicit confirmation before being carried out.
 
-## 5. Record the meeting
+## 6. Record the meeting
 
-Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its resolved outcome, work completed, knowledge gained, and next steps agreed. This is the marker the next meeting's Step 1 reads from.
+Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its resolved outcome (including stale Knowledge entries corrected or removed), work completed, knowledge gained, and next steps agreed. This is the marker the next meeting's Step 1 reads from.
 
-## 6. Commit and push
+## 7. Commit and push
 
 - Stage only `.project/` (moved Inbox files, spec amendments, the new meeting record) — never unrelated changes sitting in the working tree.
 - Commit with a message summarizing the meeting (date, findings resolved, decisions made), then push to the current branch's upstream.

@@ -29,7 +29,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 - Read any project instruction file (`CLAUDE.md`, `AGENTS.md`) and the relevant code/tests before acting.
 - Fetch the issue's title, body, labels, linked context, and all comments (`gh issue view <number> --comments`).
 - If the issue touches UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md` and `.project/Branding/Assets/`, if present, and implement against them (palette, typography, voice, logo/asset usage) — don't invent brand decisions the guide already made.
-- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. Anything you do read (a convention, a gotcha, a past decision) is binding for this implementation.
+- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. Anything you do read (a convention, a gotcha, a past decision) is binding for this implementation — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed", "feature Y is missing") that your own investigation contradicts. In that case, trust what you observe, proceed accordingly, and flag the entry as stale in Step 6.
 - Restate the acceptance criteria internally; do not implement from the title alone.
 - If something genuinely blocks a correct implementation (not resolvable from the codebase or convention), post one concise comment on the issue explaining the ambiguity, then stop and wait. Resume once answered.
 
@@ -52,7 +52,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 
 ## 6. Capture findings and knowledge
 
-- Anything found during implementation that needs the project owner's attention (scope gaps, follow-up work, potential new issues, risks) — write `.project/Inbox/findings-<slug>.md` describing it, for review at the next project meeting.
+- Anything found during implementation that needs the project owner's attention (scope gaps, follow-up work, potential new issues, risks, Knowledge entries contradicted by what you observed) — write `.project/Inbox/findings-<slug>.md` describing it, for review at the next project meeting.
 - Anything learned worth keeping for future implementations (a gotcha, a convention, an architectural decision, a reusable pattern) — write it into `.project/Knowledge/`, in a subdirectory grouped by general topic (e.g. `architecture/`, `testing/`, `tooling/`); create a new subdirectory when nothing existing fits.
 - Skip either if nothing qualifies — don't create empty or filler files.
 
@@ -75,6 +75,7 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 
 - Findings returned: judge each one against the issue's acceptance criteria — valid and actionable, or not. For anything not actionable, note why instead of acting on it.
 - For each valid finding, make the fix, then re-run the project's build/test commands; fix failures before proceeding.
+- Stale knowledge findings aren't code fixes: add them to this issue's `.project/Inbox/findings-<slug>.md` (Step 6) instead, for resolution at the next project meeting — don't edit `.project/Knowledge/` directly.
 - Commit and push the fixes to the existing branch.
 - No findings: say so and stop; do not re-run the review or invent work.
 
