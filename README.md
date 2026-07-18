@@ -4,7 +4,7 @@ A set of AI coding agent skills that implement a **spec-driven development** wor
 
 ## Requirements
 
-- **A GitHub repo.** The workflow runs on GitHub throughout — issues, pull requests, and review comments — and has no offline fallback. If the project isn't on GitHub yet, **kick-off** and **create-spec-issues** say so and offer to create the repo for you.
+- **A GitHub repo.** The workflow runs on GitHub throughout — issues, pull requests, and review comments — and has no offline fallback. Issues are grouped into a GitHub milestone per spec (created via `gh api`). If the project isn't on GitHub yet, **kick-off** and **create-spec-issues** say so and offer to create the repo for you.
 - **The [GitHub CLI](https://cli.github.com) (`gh`), installed and authenticated.** Every skill drives GitHub through `gh`. Install it (`brew install gh` on macOS), then run `gh auth login`; `gh auth status` should succeed before you start.
 - **A base branch for feature work.** `develop` is preferred — it keeps released code on `main` separate from work in progress — but it's optional: if the repo doesn't have one, the skills use its default branch (usually `main`) instead. Either way, feature branches are cut from the base branch and PRs target it.
 
@@ -12,25 +12,33 @@ A set of AI coding agent skills that implement a **spec-driven development** wor
 
 ```
 kick-off ──────────────► create-spec-issues ──────────────► implement-issue
-(idea → SPEC.md)         (SPEC.md → GitHub issues)          (issue → PR)
+(idea → SPEC.md)         (spec → milestone + issues)        (issue → PR)
                                                                    │
                                                                    ▼
 project-meeting  ◄────────────  merge-pr  ◄──────────  verify-implementation
-(triage findings,               (approved PR             (PR → review comments)
+(triage findings,               (approved PR             (PR → findings)
  plan next steps)                → base branch)            │
         ▲                                                       ▼
         │                                              check-pr-comments
         └──────────── new issues, spec changes ◄────── (feedback → fixes)
+
+project-status — run anytime: where does the project stand, what's the next action?
 ```
 
+Each skill ends by naming the next step, so you always know what to run next. For an existing project that doesn't follow this workflow yet, **migrate-project** is the entry point instead of kick-off.
+
 1. **kick-off** — interviews you about a new project or milestone, one question at a time, and writes a confirmed spec.
-2. **create-spec-issues** — reads the newest spec and breaks it into one GitHub issue per unit of work.
-3. **implement-issue** — implements a single issue end to end: branch, code, tests, and a pull request.
-4. **verify-implementation** — independently reviews the resulting PR for bugs, security issues, and unmet acceptance criteria, and comments on it. Ships with a matching subagent (`agents/verify-implementation.md`), so the review runs in its own context window: the diff and the file reads stay out of your main conversation, and only a summary comes back.
+2. **create-spec-issues** — reads the newest spec, checks it against the code and captured knowledge for stale claims, and breaks it into one GitHub issue per unit of work — grouped under a GitHub milestone, ordered by dependency (`Depends on #N`).
+3. **implement-issue** — implements a single issue end to end: branch, code, tests, and a pull request. Refuses issues whose blockers are still open.
+4. **verify-implementation** — independently reviews the resulting PR for bugs, security issues, and unmet acceptance criteria, and returns its findings to the caller (implement-issue acts on them). Ships with a matching subagent (`agents/verify-implementation.md`), so the review runs in its own context window: the diff and the file reads stay out of your main conversation, and only a summary comes back.
 5. **check-pr-comments** — triages review feedback on an already-implemented issue and fixes what's valid.
-6. **merge-pr** — merges an approved PR back into the base branch and cleans up the branch.
+6. **merge-pr** — merges an approved PR back into the base branch, cleans up the branch, and closes the milestone when its last issue lands.
 7. **project-meeting** — a recurring status meeting: reviews open findings, reports on finished work, and plans what's next — always with your confirmation before anything is decided.
-8. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
+8. **project-status** — read-only, run anytime: reports milestone progress, open PRs, and pending findings, and recommends exactly one next action.
+9. **migrate-project** — entry point for an existing project that doesn't follow the workflow yet: inventories its planning documents and GitHub state, migrates everything into `.project/` and a milestone, and archives the originals. Re-runnable — it migrates only what's missing.
+10. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
+
+Conventions shared by all skills (branch naming, milestone commands, the spec `Status:` lifecycle, Knowledge rules) live in `skills/_shared/conventions.md`.
 
 ## The `.project/` directory
 
@@ -39,7 +47,7 @@ Skills read and write project state here (created automatically on first use):
 | Folder | Purpose |
 |---|---|
 | `SPEC.md` | The original, confirmed project spec |
-| `SPEC-milestone-<###>-<slug>.md` | One confirmed spec per milestone |
+| `SPEC-milestone-<###>-<slug>.md` | One confirmed spec per milestone, with a `Status: Planned/Active/Done` header |
 | `Reports/` | Short completion reports, one per finished issue |
 | `Inbox/` | Findings surfaced during implementation, awaiting discussion |
 | `Archive/` | Resolved findings and past meeting records |
@@ -61,6 +69,8 @@ Skills live in a plain top-level `skills/` folder rather than `.claude/skills/`,
 |---|---|
 | `skills/<name>/` | `~/.claude/skills`, `~/.agents/skills` |
 | `agents/<name>.md` | `~/.claude/agents` |
+
+`skills/_shared/` is linked alongside the skills — it's not a skill itself, but the conventions file the skills reference as a sibling directory.
 
 Existing symlinks that point somewhere else are skipped unless you pass `--force`, and real files or directories are never overwritten. If you'd rather not symlink, copy the `skills/<name>/` folders and `agents/<name>.md` files into your agent's skills and subagent directories by hand.
 

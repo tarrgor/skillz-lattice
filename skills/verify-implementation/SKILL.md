@@ -10,7 +10,7 @@ Reviews a finished implementation against its issue — does not implement or fi
 ## 1. Identify the issue and its PR
 
 - Identify the GitHub issue by number. If genuinely unclear, ask.
-- Find the PR whose head branch is `issue/<issue-number>-*` (`gh pr list --search "head:issue/<issue-number>-"`, or `gh pr view <number>` if the PR number is already known). Read the linked issue in full.
+- Find the PR whose head branch is `issue/<issue-number>-*` (`gh pr list --search "head:issue/<issue-number>-"`, or `gh pr view <number>` if the PR number is already known; convention: `../_shared/conventions.md`). Read the linked issue in full.
 - Note the acceptance criteria specifically — they're the review's checklist.
 - Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. A captured convention the diff violates is a valid finding — so is an entry whose asserted code/issue state (e.g. "unfixed", "not yet supported") this diff now contradicts; report that as stale knowledge rather than silently ignoring it.
 

@@ -7,17 +7,19 @@ description: This skill should be used to implement a single GitHub issue from a
 
 Follow this workflow end to end. Keep the user informed at important transitions, but continue autonomously unless a blocking question or unsafe repository state requires their input.
 
+Branch/slug format, base-branch rule, `Depends on #N` format, and the Knowledge discipline are defined in `../_shared/conventions.md` (relative to this skill's directory).
+
 ## 1. Identify the issue and check for an existing implementation
 
 - Identify the GitHub issue by number. If genuinely unclear, ask.
 - Search for a PR whose head branch is `issue/<issue-number>-*` (`gh pr list --search "head:issue/<issue-number>-"`).
 - **Found one** — this issue is already implemented. Stop and tell the user to use the `check-pr-comments` skill instead; do not refresh the base branch, create a branch, or touch the existing one.
-- **Found nothing** — continue to Step 2 as a fresh implementation.
+- **Found nothing** — check for blockers: if the issue body contains `Depends on #<number>` lines, check each blocker's state (`gh issue view <n> --json state`). Any still open — stop, list the open blockers, and offer to implement one of them instead. All closed (or none listed) — continue to Step 2 as a fresh implementation.
 
 ## 2. Determine and refresh the base branch
 
 - `git fetch` first. Check `git status`, current branch, and remotes. Never discard, stash, or sweep in unrelated user changes without explicit permission — if uncommitted changes make switching branches unsafe, stop and ask.
-- The base branch is `develop` if it exists locally or on the remote; otherwise it's the repository's default branch (`gh repo view --json defaultBranchRef`), typically `main`. Single-branch projects are supported — don't create `develop` yourself.
+- The base branch follows the shared convention: `develop` if it exists, else the repository's default branch. Single-branch projects are supported — don't create `develop` yourself.
 - Update it with a fast-forward-only pull:
   ```bash
   git switch <base>
@@ -29,7 +31,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 - Read any project instruction file (`CLAUDE.md`, `AGENTS.md`) and the relevant code/tests before acting.
 - Fetch the issue's title, body, labels, linked context, and all comments (`gh issue view <number> --comments`).
 - If the issue touches UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md` and `.project/Branding/Assets/`, if present, and implement against them (palette, typography, voice, logo/asset usage) — don't invent brand decisions the guide already made.
-- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. Anything you do read (a convention, a gotcha, a past decision) is binding for this implementation — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed", "feature Y is missing") that your own investigation contradicts. In that case, trust what you observe, proceed accordingly, and flag the entry as stale in Step 6.
+- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries; what you read is binding unless a checkable claim is contradicted by your own investigation — then trust what you observe and flag the entry as stale in Step 6.
 - Restate the acceptance criteria internally; do not implement from the title alone.
 - If something genuinely blocks a correct implementation (not resolvable from the codebase or convention), post one concise comment on the issue explaining the ambiguity, then stop and wait. Resume once answered.
 
@@ -39,7 +41,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
   ```bash
   git switch -c issue/<slug>
   ```
-  `<slug>` is `<issue-number>-<kebab-title>`.
+  `<slug>` is `<issue-number>-<kebab-title>` (per conventions).
 - Don't reset or overwrite an existing branch of that name — Step 1 already handles the case where one exists.
 
 ## 5. Implement and verify
@@ -53,7 +55,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 ## 6. Capture findings and knowledge
 
 - Anything found during implementation that needs the project owner's attention (scope gaps, follow-up work, potential new issues, risks, Knowledge entries contradicted by what you observed) — write `.project/Inbox/findings-<slug>.md` describing it, for review at the next project meeting.
-- Anything learned worth keeping for future implementations (a gotcha, a convention, an architectural decision, a reusable pattern) — write it into `.project/Knowledge/`, in a subdirectory grouped by general topic (e.g. `architecture/`, `testing/`, `tooling/`); create a new subdirectory when nothing existing fits.
+- Anything learned worth keeping for future implementations (a gotcha, a convention, an architectural decision, a reusable pattern) — write it into `.project/Knowledge/`, in a subdirectory grouped by general topic (e.g. `architecture/`, `testing/`, `tooling/`); create a new subdirectory when nothing existing fits. New entries only — never edit or delete an existing entry here (governance per conventions); contradictions go into the findings file above.
 - Skip either if nothing qualifies — don't create empty or filler files.
 
 ## 7. Publish
@@ -64,7 +66,7 @@ Follow this workflow end to end. Keep the user informed at important transitions
 
 ## 8. Report completion
 
-Write `.project/Reports/<slug>.md` — a short report of what was implemented and how it was verified. `create-spec-issues` checks this directory to skip already-done work.
+Write `.project/Reports/<slug>.md` — a short report of what was implemented and how it was verified. `project-meeting` and `project-status` read these reports; issue-level dedup lives in the GitHub milestone, not here.
 
 ## 9. Independent review
 
@@ -77,7 +79,11 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 - For each valid finding, make the fix, then re-run the project's build/test commands; fix failures before proceeding.
 - Stale knowledge findings aren't code fixes: add them to this issue's `.project/Inbox/findings-<slug>.md` (Step 6) instead, for resolution at the next project meeting — don't edit `.project/Knowledge/` directly.
 - Commit and push the fixes to the existing branch.
-- No findings: say so and stop; do not re-run the review or invent work.
+- No findings: say so; do not re-run the review or invent work.
+
+## 11. Suggest the next step
+
+End by naming the next step: all findings addressed (or none) → suggest `merge-pr`; anything unresolved or disputed → suggest the user review it and run `check-pr-comments` afterwards.
 
 ## Failure handling
 

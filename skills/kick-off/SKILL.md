@@ -41,6 +41,11 @@ Summarize the full plan. Do not write anything until the user explicitly confirm
 
 - `.project/SPEC.md` holds only the project vision: problem/goal, target users, architecture/stack, non-functional requirements, long-term roadmap. It changes rarely — later changes are amendments, not rewrites.
 - `.project/SPEC-milestone-<###>-<slug>.md` holds one milestone's concrete detail: scope (in/out), workflows, data model, acceptance-level detail. Number sequentially, zero-padded to 3 digits (`001`, `002`, ...) — find the highest existing `SPEC-milestone-<###>-*.md` directly under `.project/` and use `+1`, starting at `001`.
+- Every milestone spec's first line is `Status: Planned` (lifecycle per `../_shared/conventions.md`, relative to this skill's directory); `.project/SPEC.md` itself carries no status.
 - New project: write both `.project/SPEC.md` and the first milestone spec (`SPEC-milestone-001-<slug>.md`).
 - New milestone in an existing codebase: write only the next milestone spec; leave `.project/SPEC.md` untouched unless the vision itself changed, in which case amend it rather than rewriting it.
 - Documentation only — do not implement the plan.
+
+## 7. Suggest the next step
+
+End by suggesting `create-spec-issues` to break the confirmed spec into issues.

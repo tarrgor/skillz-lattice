@@ -9,7 +9,7 @@
 ## `.project/`
 
 - `SPEC.md` — confirmed project vision
-- `SPEC-milestone-<###>-<slug>.md` — confirmed spec per milestone
+- `SPEC-milestone-<###>-<slug>.md` — confirmed spec per milestone (`Status: Planned/Active/Done` header)
 - `Reports/` — completion reports
 - `Inbox/` / `Archive/` — findings awaiting / resolved
 - `Knowledge/` — durable learnings by topic

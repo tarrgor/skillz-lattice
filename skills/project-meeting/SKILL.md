@@ -23,6 +23,7 @@ Moderates a recurring project status meeting — does not touch code. Every deci
 - List `.project/Knowledge/**`. Skip entries recording a pure convention or decision — nothing there to go stale. For entries asserting a specific, checkable state ("X is unfixed", "Y isn't supported yet"), re-verify against the current code or issue tracker.
 - Anything contradicted: treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede, one at a time, same discipline.
 - This is a full sweep, not scoped to "since last meeting" — staleness accumulates precisely in entries nobody has touched recently.
+- Also spot-check the `Active` milestone spec (`Status:` lifecycle per `../_shared/conventions.md`, relative to this skill's directory): re-verify its checkable claims about the codebase the same way. Contradictions become Step 4 findings (outcome: spec amendment). If the milestone is actually finished but the spec isn't marked, propose setting `Status: Done`.
 
 ## 4. Triage findings, one at a time
 
@@ -43,5 +44,10 @@ Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its res
 
 ## 7. Commit and push
 
+- `.project/` changes belong on the base branch (per conventions: `develop` if present, else the default). If a feature branch is checked out, say so and `git switch <base>` first — never discard, stash, or sweep in unrelated uncommitted changes; if switching is unsafe, stop and ask.
 - Stage only `.project/` (moved Inbox files, spec amendments, the new meeting record) — never unrelated changes sitting in the working tree.
-- Commit with a message summarizing the meeting (date, findings resolved, decisions made), then push to the current branch's upstream.
+- Commit with a message summarizing the meeting (date, findings resolved, decisions made), then push.
+
+## 8. Suggest the next step
+
+End by naming the next action that follows from the meeting's decisions — e.g. `implement-issue` for a newly created issue, `create-spec-issues` after a spec change, or nothing pending.

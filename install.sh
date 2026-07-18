@@ -91,6 +91,8 @@ ensure_dir() {
 }
 
 # Skills: skills/<name>/ -> <target>/<name>
+# The glob intentionally includes skills/_shared/ (no SKILL.md) — skills
+# reference it as a sibling directory (../_shared/conventions.md).
 for target_dir in "${SKILL_TARGET_DIRS[@]}"; do
   ensure_dir "$target_dir"
 
