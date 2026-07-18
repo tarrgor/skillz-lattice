@@ -7,7 +7,7 @@ description: This skill should be used to merge an open, reviewed pull request b
 
 Merges an approved PR into its base branch and cleans up the branch — does not review or implement anything.
 
-The base branch is whatever the PR targets: `develop` where the project has one, otherwise the default branch (typically `main`). Read it off the PR (`gh pr view <number> --json baseRefName`) rather than assuming.
+The base branch is whatever the PR targets: `develop` where the project has one, otherwise the default branch (typically `main`). Read it off the PR (`gh pr view <number> --json baseRefName`) rather than assuming. Milestone commands and the spec `Status:` lifecycle are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Identify the PR
 
@@ -31,16 +31,23 @@ Only for a normal branch (skip entirely for a linked worktree — no switch, no 
 
 ```bash
 git switch <base>
-git branch -d issue/<slug>
+git branch -d <head-branch>   # from gh pr view <number> --json headRefName
 git pull --ff-only
 ```
 
-## 5. Report
+## 5. Close the milestone if finished
 
-Confirm the merge and remote branch deletion. For a normal branch, also confirm the local branch was deleted and the base branch is up to date; for a linked worktree, note that the local branch was left in place. Note the issue this closed.
+- Read the closed issue's milestone (`gh issue view <issue-number> --json milestone`); skip this step if it has none.
+- `gh issue list --milestone "<title>" --state open` — the just-merged issue closes via `Closes #` asynchronously, so treat it as closed even if it still shows open (re-query once if unsure).
+- If no other issues remain open: close the milestone via `gh api` (number lookup + PATCH per conventions), set the matching spec's `Status:` header to `Done`, and commit that `.project/` change on the base branch. In a linked worktree, skip the commit and report the spec change as pending instead.
 
-## 6. Check the Inbox
+## 6. Report
+
+Confirm the merge and remote branch deletion. For a normal branch, also confirm the local branch was deleted and the base branch is up to date; for a linked worktree, note that the local branch was left in place. Note the issue this closed and whether the milestone closed with it.
+
+## 7. Check the Inbox and suggest the next step
 
 - List `.project/Inbox/findings-*.md` (skip if the folder is absent or empty).
 - Recommend the user run a project meeting (`project-meeting`) if either holds: any finding is critical — needs immediate attention (e.g. security risk, data loss, broken build, blocker for other work) — or there are three or more findings pending.
 - Keep it to a brief hint at the end of the report; name the critical finding(s) or the count. Do not open, triage, or act on the findings here — that is the project meeting's job.
+- Otherwise, name the next open issue in the milestone whose `Depends on #<number>` blockers are all closed (lowest number) and suggest `implement-issue` for it. If the milestone just closed, suggest `project-meeting` or `kick-off` for the next milestone.

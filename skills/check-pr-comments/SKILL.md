@@ -7,6 +7,8 @@ description: This skill should be used to triage and address review feedback on 
 
 Addresses review feedback on an issue that's already implemented — does not re-implement or create a new branch/PR.
 
+Branch/slug format and the Knowledge discipline are defined in `../_shared/conventions.md` (relative to this skill's directory).
+
 ## 1. Identify the issue and its branch
 
 - Accept an issue number or a PR number. If genuinely unclear, ask.
@@ -18,7 +20,7 @@ Addresses review feedback on an issue that's already implemented — does not re
 - Read the original issue in full — its acceptance criteria are the triage checklist.
 - Fetch the feedback: all PR comments and unresolved review threads (`gh pr view <number> --comments`).
 - If the feedback concerns UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md`, if present, and fix against it — don't invent brand decisions the guide already made.
-- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to the feedback's area. Never read the tree wholesale; if nothing matches, skip it. A comment that contradicts a captured convention is worth flagging in the reply rather than silently following. Likewise, if an entry asserts a specific, checkable state of the code or an issue that your investigation contradicts, don't treat it as binding — proceed on what you observe and flag it in Step 4.
+- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries. A comment that contradicts a captured convention is worth flagging in the reply rather than silently following; an entry asserting a checkable state your investigation contradicts is not binding — proceed on what you observe and flag it in Step 4.
 
 ## 3. Triage and fix
 
@@ -29,5 +31,5 @@ Addresses review feedback on an issue that's already implemented — does not re
 
 - Commit and push the fixes to the existing branch.
 - Reply to each addressed comment confirming the fix.
-- Anything found that needs the project owner's attention (including Knowledge entries contradicted by what you observed): write `.project/Inbox/findings-<slug>.md`. Anything worth keeping for future implementations: add it to `.project/Knowledge/<topic>/`.
+- Anything found that needs the project owner's attention (including Knowledge entries contradicted by what you observed): write `.project/Inbox/findings-<slug>.md`. Anything worth keeping for future implementations: add a new entry to `.project/Knowledge/<topic>/` — never edit or delete an existing entry here (governance per conventions); corrections go through the Inbox findings file.
 - Update `.project/Reports/<slug>.md` with the new verification results.
