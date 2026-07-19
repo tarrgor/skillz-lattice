@@ -36,9 +36,10 @@ Each skill ends by naming the next step, so you always know what to run next. Fo
 7. **project-meeting** — a recurring status meeting: reviews open findings, reports on finished work, and plans what's next — always with your confirmation before anything is decided.
 8. **project-status** — read-only, run anytime: reports milestone progress, open PRs, and pending findings, and recommends exactly one next action.
 9. **migrate-project** — entry point for an existing project that doesn't follow the workflow yet: inventories its planning documents and GitHub state, migrates everything into `.project/` and a milestone, and archives the originals. Re-runnable — it migrates only what's missing.
-10. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
+10. **create-obsidian-vault** — makes `.project/` browsable as an Obsidian vault: vault config plus a generated `Home.md` index of specs, knowledge, findings, and reports. **You invoke this one** — run `/create-obsidian-vault` whenever you want the vault created or its index refreshed. Agents never run it on their own; kick-off and migrate-project only remind you it exists.
+11. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
 
-Conventions shared by all skills (branch naming, milestone commands, the spec `Status:` lifecycle, Knowledge rules) live in `skills/_shared/conventions.md`.
+Conventions shared by all skills (branch naming, committing to a protected base branch, milestone commands, the spec `Status:` lifecycle, Knowledge rules) live in `skills/_shared/conventions.md`.
 
 ## The `.project/` directory
 
@@ -54,6 +55,7 @@ Skills read and write project state here (created automatically on first use):
 | `Knowledge/` | Durable learnings, organized by topic |
 | `Branding/BRAND.md` | Brand identity guide: palette, typography, voice & tone |
 | `Branding/Assets/` | Generated logo, icon, and marketing assets (or creative briefs) |
+| `Home.md` + `.obsidian/` | Obsidian vault: open `.project/` as a vault to browse all of the above |
 
 ## How to use it
 
