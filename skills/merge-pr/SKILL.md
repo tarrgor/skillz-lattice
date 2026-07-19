@@ -23,6 +23,7 @@ The base branch is whatever the PR targets: `develop` where the project has one,
 
 - Check whether the current directory is a linked git worktree, not the main checkout: `git rev-parse --git-common-dir --git-dir` — if the two paths differ, it's a worktree. (Also visible via `git worktree list`.)
 - **Normal branch (not a worktree):** `gh pr merge <number> --squash --delete-branch`. Always use the squash merge method. Confirm the remote branch was deleted; if `--delete-branch` didn't remove it, delete it explicitly.
+- If the merge is rejected by branch protection (missing approvals, required checks), stop and report what protection requires. Never bypass it with `--admin`.
 - **Linked worktree:** the local branch is checked out in this worktree and bound to the session — do not delete it and do not switch it. Merge without `--delete-branch` (`gh pr merge <number> --squash`), then delete only the remote branch (`git push origin --delete <branch>`). Leave the local branch and worktree alone.
 
 ## 4. Clean up locally
@@ -39,7 +40,8 @@ git pull --ff-only
 
 - Read the closed issue's milestone (`gh issue view <issue-number> --json milestone`); skip this step if it has none.
 - `gh issue list --milestone "<title>" --state open` — the just-merged issue closes via `Closes #` asynchronously, so treat it as closed even if it still shows open (re-query once if unsure).
-- If no other issues remain open: close the milestone via `gh api` (number lookup + PATCH per conventions), set the matching spec's `Status:` header to `Done`, and commit that `.project/` change on the base branch. In a linked worktree, skip the commit and report the spec change as pending instead.
+- If no other issues remain open: close the milestone via `gh api` (number lookup + PATCH per conventions) and set the matching spec's `Status:` header to `Done`.
+- Commit that `.project/` change per the base-branch rules in `../_shared/conventions.md` — the branch is usually protected, so the branch-and-PR fallback (branch `chore/close-milestone-<number>`) applies if the push is rejected.
 
 ## 6. Report
 

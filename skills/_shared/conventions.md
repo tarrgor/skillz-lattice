@@ -12,6 +12,20 @@ Shared rules for all skills in this workflow. Skills reference this file as `../
 
 `develop` if it exists locally or on the remote; otherwise the repository's default branch (`gh repo view --json defaultBranchRef`), typically `main`. Never create `develop` yourself.
 
+## Committing to the base branch
+
+The base branch is usually protected against direct pushes — never assume a commit can land there. Commit it, then `git push`; if the push is rejected (protected branch, required reviews, required checks), move the commit to a branch and open a PR instead:
+
+```bash
+git reset --soft HEAD~1
+git switch -c <type>/<short-slug>
+git commit -m "<message>"
+git push -u origin <type>/<short-slug>
+gh pr create --base <base> --fill
+```
+
+Report the follow-up PR number rather than claiming the change landed on the base branch. Never bypass protection (no `--admin`, no force-push). In a linked worktree, skip the commit entirely and report the change as pending.
+
 ## GitHub milestones
 
 - Milestone title = the spec filename minus `SPEC-milestone-` and `.md` (`SPEC-milestone-001-auth-flow.md` → `001-auth-flow`). A legacy project with only `SPEC.md` uses `001-initial`.
