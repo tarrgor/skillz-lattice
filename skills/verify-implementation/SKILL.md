@@ -7,6 +7,13 @@ description: This skill should be used to review a pull request produced by impl
 
 Reviews a finished implementation against its issue — does not implement or fix anything.
 
+## 0. Review in a fresh context
+
+The review must not run in the context that wrote the code — it needs both the independence and the context isolation.
+
+- **Already running as the `verify-implementation` agent** (the subagent preloads this skill), or `agents/verify-implementation.md` is not installed: do the review here, starting at Step 1.
+- **Otherwise** — invoked directly by the user, or from another skill: delegate. Launch it with the Agent tool (`subagent_type: verify-implementation`, `run_in_background: false`), passing the issue number and the PR number, then report its findings back per Step 4. Do not read the diff yourself first.
+
 ## 1. Identify the issue and its PR
 
 - Identify the GitHub issue by number. If genuinely unclear, ask.
