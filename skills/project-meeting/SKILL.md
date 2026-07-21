@@ -46,7 +46,7 @@ Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its res
 
 - `.project/` changes belong on the base branch (per conventions: `develop` if present, else the default). If a feature branch is checked out, say so and `git switch <base>` first — never discard, stash, or sweep in unrelated uncommitted changes; if switching is unsafe, stop and ask.
 - Stage only `.project/` (moved Inbox files, spec amendments, the new meeting record) — never unrelated changes sitting in the working tree.
-- Commit with a message summarizing the meeting (date, findings resolved, decisions made), then push.
+- Commit with a message summarizing the meeting (date, findings resolved, decisions made) per the base-branch rules in `../_shared/conventions.md` — the branch is usually protected, so the branch-and-PR fallback (branch `chore/project-meeting-<YYYY-MM-DD>`) applies if the push is rejected; report that PR instead of claiming the change landed on the base branch.
 
 ## 8. Suggest the next step
 
