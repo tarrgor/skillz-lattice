@@ -10,5 +10,8 @@
   "word-count": true,
   "file-recovery": true,
   "bases": true,
-  "canvas": true
+  "canvas": true,
+  "sync": false,
+  "publish": false,
+  "webviewer": false
 }

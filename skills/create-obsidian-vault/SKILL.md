@@ -18,7 +18,7 @@ Re-runnable: config files are never overwritten once they exist, and `Home.md` i
 
 Copy each file from this skill's `references/obsidian/` to `.project/.obsidian/`, **skipping any that already exists** — the user's own settings win.
 
-`app.json` sets `useMarkdownLinks: true` so links stay readable on GitHub, and points attachments at `Branding/Assets`. `graph.json` color-codes SPEC, Knowledge, Inbox, Reports, and Archive in the graph view.
+`app.json` sets `useMarkdownLinks: true` so links stay readable on GitHub, and points attachments at `Branding/Assets`. `graph.json` color-codes SPEC, Knowledge, Inbox, Reports, and Archive in the graph view. `core-plugins.json` must list every plugin it wants **off** explicitly — a plugin omitted from that map keeps Obsidian's default. The network-facing ones (`sync`, `publish`, `webviewer`) are therefore pinned to `false`: a `.project/` vault holds internal specs and findings, so nothing that uploads or fetches should switch itself on. Pin any future outward-facing core plugin the same way.
 
 ## 3. Ignore the local-only vault state
 
