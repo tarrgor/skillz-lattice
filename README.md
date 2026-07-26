@@ -79,3 +79,9 @@ Existing symlinks that point somewhere else are skipped unless you pass `--force
 Subagents are a Claude Code feature, so `agents/` only goes to `~/.claude/agents`. On another agent runtime the skills still work on their own — you just lose the context isolation.
 
 Once installed, just tell your agent what you want in plain language — e.g. *"kick off this project"*, *"implement issue #12"*, *"let's have a project meeting"*.
+
+## License
+
+[MIT](LICENSE) © tarrgor.
+
+These skills instruct an agent to act on your repository — creating branches, committing, pushing, opening and merging pull requests, and editing files under `.project/`. Read a skill before you run it, and keep your agent's permission settings tight enough that you see those actions before they happen. The software comes with no warranty of any kind; what it does to your repo is your responsibility.
