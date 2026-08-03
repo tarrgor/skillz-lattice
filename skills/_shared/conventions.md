@@ -40,6 +40,12 @@ Every milestone spec's first line is `Status: <value>`: `Planned` (spec written,
 
 A dependency on another issue is one line in the issue body: `Depends on #<number>` — exact prefix, own line, one line per blocker — so skills can parse it reliably.
 
+## `.project/` layout
+
+`Inbox/`, `Archive/`, `Knowledge/`, `Reports/`, `Branding/Assets/`.
+
+Any skill writing into `.project/` creates that whole set if missing (`mkdir -p`), not just the one directory it needs — the layout is then identical whichever skill reaches the project first, and later skills find what they expect. Spec files are never pre-created as empty placeholders; the `Status:` lifecycle reads them. Root `CLAUDE.md` and `AGENTS.md` are `kick-off`'s alone — no other skill creates them.
+
 ## Knowledge
 
 - **Consultation**: list `.project/Knowledge/` subdirectory and file names (`ls -R .project/Knowledge`) and read only entries whose names plausibly relate to the task's area. Never read the tree wholesale; if nothing matches, skip it. Anything read (a convention, a gotcha, a past decision) is binding — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed") that your own investigation contradicts; then trust what you observe and flag the entry as stale.

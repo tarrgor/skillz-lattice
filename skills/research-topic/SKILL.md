@@ -7,7 +7,7 @@ description: This skill should be used to research a topic in depth against exte
 
 Researches one topic against external sources and writes what was learned into `.project/Knowledge/<topic>/`. Does not touch code, issues, or specs.
 
-The Knowledge consultation and governance rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+The `.project/` layout, the Knowledge consultation and governance rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Scope the research with the user
 
@@ -21,7 +21,8 @@ Ask one question at a time and propose a recommended answer for each. Skip anyth
 
 ## 2. Check what the project already knows
 
-- `ls -R .project/Knowledge` (create `.project/Knowledge/` if absent). Pick the target topic directory: reuse an existing one whose name fits, create a new one only when nothing does.
+- Create the `.project/` directories if missing, per the layout in `../_shared/conventions.md` — research can precede `kick-off` on an empty project, and the layout must not depend on which skill ran first.
+- `ls -R .project/Knowledge`. Pick the target topic directory: reuse an existing one whose name fits, create a new one only when nothing does.
 - Read the entries in that directory plus any others whose names relate to the topic. Note both what's already established and when it was researched.
 - Drop or narrow any subtopic already answered — research the gaps, not the basics. If everything in scope is already covered, say so and stop rather than producing a near-duplicate entry.
 
@@ -69,4 +70,4 @@ Research that contradicts an existing Knowledge entry does not correct it here. 
 
 ## 7. Report
 
-State the entry's path, the recommendation in a sentence or two, the confidence and why, any open question left unanswered, and any Inbox finding written. Recommend `project-meeting` if a contradiction was filed.
+State the entry's path, the recommendation in a sentence or two, the confidence and why, any open question left unanswered, and any Inbox finding written. Recommend `project-meeting` if a contradiction was filed, or `kick-off` if the project has no spec yet — research done before a spec exists is there to inform the kick-off interview.

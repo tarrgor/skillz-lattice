@@ -7,11 +7,11 @@ description: This skill should be used when starting a brand new project (empty 
 
 Runs on an empty/near-empty project directory (new project) or to scope a new milestone in an existing codebase. Turns a rough idea into a confirmed spec — does not implement anything.
 
-Written-deliverable sizing and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+The `.project/` layout, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Set up project files
 
-- Create if missing: `.project/Inbox/`, `.project/Archive/`, `.project/Knowledge/`, `.project/Branding/Assets/`, `.project/Reports/`.
+- Create the `.project/` directories if missing, per the layout in `../_shared/conventions.md`.
 - Create if missing: root `CLAUDE.md`, copied verbatim from this skill's `references/CLAUDE.md.template`; and root `AGENTS.md` containing just `Read CLAUDE.md.`. Never overwrite either if it already exists.
 - If a codebase exists, read the README, manifests, source layout, `.project/SPEC.md`, and any `.project/SPEC-milestone-*.md` first. Anything discoverable this way is a **fact** — never ask the user for it.
 
