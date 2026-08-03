@@ -7,7 +7,7 @@ description: This skill should be used to research a topic in depth against exte
 
 Researches one topic against external sources and writes what was learned into `.project/Knowledge/<topic>/`. Does not touch code, issues, or specs.
 
-The `.project/` layout, the Knowledge consultation and governance rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+The `.project/` layout, the Knowledge consultation and governance rules, the base-branch and committing rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Scope the research with the user
 
@@ -68,6 +68,13 @@ If a prior entry in the topic covers adjacent ground, link it and state what thi
 
 Research that contradicts an existing Knowledge entry does not correct it here. Write `.project/Inbox/findings-<slug>.md` naming both entries and the conflict; `project-meeting` reconciles them. Same for research that contradicts the current spec.
 
-## 7. Report
+## 7. Commit, if there is a repository
 
-State the entry's path, the recommendation in a sentence or two, the confidence and why, any open question left unanswered, and any Inbox finding written. Recommend `project-meeting` if a contradiction was filed, or `kick-off` if the project has no spec yet — research done before a spec exists is there to inform the kick-off interview.
+- Not a git work tree (`git rev-parse --git-dir` fails): skip this step and say the entry is on disk but uncommitted. Never run `git init` — creating the repository belongs to `kick-off`, with the user's confirmation.
+- A work tree: `.project/` changes belong on the base branch (per conventions: `develop` if present, else the default). If a feature branch is checked out, say so and `git switch <base>` first — never discard, stash, or sweep in unrelated uncommitted changes; if switching is unsafe, stop and ask.
+- Stage only the files this run wrote (the Knowledge entry, and any Inbox finding) — never unrelated changes sitting in the working tree. Commit per the base-branch rules in `../_shared/conventions.md`; if the push is rejected because the branch is protected, use the branch-and-PR fallback (branch `chore/research-<slug>`) and report that PR instead of claiming the entry landed on the base branch.
+- No remote configured: commit and say the push was skipped.
+
+## 8. Report
+
+State the entry's path, the recommendation in a sentence or two, the confidence and why, any open question left unanswered, any Inbox finding written, and whether the entry was committed (and pushed) or left on disk. Recommend `project-meeting` if a contradiction was filed, or `kick-off` if the project has no spec yet — research done before a spec exists is there to inform the kick-off interview.
