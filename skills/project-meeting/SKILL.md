@@ -23,7 +23,8 @@ Written-deliverable sizing and the delegation rule are defined in `../_shared/co
 ## 3. Spot-check Knowledge currency
 
 - List `.project/Knowledge/**`. Skip entries recording a pure convention or decision — nothing there to go stale. For entries asserting a specific, checkable state ("X is unfixed", "Y isn't supported yet"), re-verify against the current code or issue tracker.
-- Anything contradicted: treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede, one at a time, same discipline.
+- Entries with `type: research` frontmatter rest on external sources that decay on their own schedule, so they age rather than get contradicted. Flag one when its `researched:` date is more than roughly three months old, when its `confidence:` is `low`, or when the project has since committed to a decision it informed. Do not re-run the research here — that's a Step 4 outcome.
+- Anything contradicted or flagged as aged: treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede, one at a time, same discipline.
 - This is a full sweep, not scoped to "since last meeting" — staleness accumulates precisely in entries nobody has touched recently.
 - Also spot-check the `Active` milestone spec (`Status:` lifecycle per `../_shared/conventions.md`, relative to this skill's directory): re-verify its checkable claims about the codebase the same way. Contradictions become Step 4 findings (outcome: spec amendment). If the milestone is actually finished but the spec isn't marked, propose setting `Status: Done`.
 
@@ -32,6 +33,7 @@ Written-deliverable sizing and the delegation rule are defined in `../_shared/co
 - Process each file in `.project/Inbox/`, plus each stale Knowledge entry flagged in Step 3, individually: present it, propose an outcome, and wait for the user's decision before moving to the next finding.
   - Inbox findings: new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else.
   - Stale Knowledge entries: update the entry, archive/delete it, or leave as-is.
+  - Aged research entries: leave as-is, archive it if the decision it fed is settled and it no longer informs anything, or agree to re-research it. Re-research is a recommendation to run `research-topic` after the meeting — never run it from here; it is user-invoked and needs its own scoping.
 - On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, edit or remove the Knowledge entry, or discard — then move any consumed Inbox file to `.project/Archive/`.
 - Never batch findings or decide more than one at a time.
 
@@ -52,4 +54,4 @@ Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its res
 
 ## 8. Suggest the next step
 
-End by naming the next action that follows from the meeting's decisions — e.g. `implement-issue` for a newly created issue, `create-spec-issues` after a spec change, or nothing pending.
+End by naming the next action that follows from the meeting's decisions — e.g. `implement-issue` for a newly created issue, `create-spec-issues` after a spec change, `research-topic` for an entry agreed to be re-researched or an open question the meeting couldn't settle, or nothing pending.

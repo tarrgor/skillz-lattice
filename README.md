@@ -37,7 +37,8 @@ Each skill ends by naming the next step, so you always know what to run next. Fo
 8. **project-status** — read-only, run anytime: reports milestone progress, open PRs, and pending findings, and recommends exactly one next action.
 9. **migrate-project** — entry point for an existing project that doesn't follow the workflow yet: inventories its planning documents and GitHub state, migrates everything into `.project/` and a milestone, and archives the originals. Re-runnable — it migrates only what's missing.
 10. **create-obsidian-vault** — makes `.project/` browsable as an Obsidian vault: vault config plus a generated `Home.md` index of specs, knowledge, findings, and reports. **You invoke this one** — run `/create-obsidian-vault` whenever you want the vault created or its index refreshed. Agents never run it on their own; kick-off and migrate-project only remind you it exists.
-11. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
+11. **research-topic** — standalone, **you invoke this one**: researches a topic in depth against external sources and captures the result as a durable `.project/Knowledge/` entry, so knowledge can be acquired deliberately rather than only as a byproduct of implementation. Scopes the question with you first, checks what the project already knows so it researches the gaps, and runs the sweep in subagents (`agents/research-topic.md`) — one per subtopic, in parallel — so the pages read stay out of your conversation. Entries are marked `type: research` with a date, sources, and a confidence level; anything contradicting existing knowledge goes to the Inbox for the next meeting rather than overwriting it. Useful before **kick-off** (inform the spec interview), before **implement-issue** (an unfamiliar library or protocol), or when a **project-meeting** finding turns out to be an open question rather than a decision.
+12. **generate-branding** — standalone, on demand: produces or refreshes a brand identity guide and visual assets in `.project/Branding/`. Independent of the loop above — run it whenever you want branding created or updated.
 
 Conventions shared by all skills (branch naming, committing to a protected base branch, milestone commands, the spec `Status:` lifecycle, Knowledge rules) live in `skills/_shared/conventions.md`.
 
@@ -52,7 +53,7 @@ Skills read and write project state here (created automatically on first use):
 | `Reports/` | Short completion reports, one per finished issue |
 | `Inbox/` | Findings surfaced during implementation, awaiting discussion |
 | `Archive/` | Resolved findings and past meeting records |
-| `Knowledge/` | Durable learnings, organized by topic |
+| `Knowledge/` | Durable learnings, organized by topic — captured during implementation, or researched deliberately via `research-topic` |
 | `Branding/BRAND.md` | Brand identity guide: palette, typography, voice & tone |
 | `Branding/Assets/` | Generated logo, icon, and marketing assets (or creative briefs) |
 | `Home.md` + `.obsidian/` | Obsidian vault: open `.project/` as a vault to browse all of the above |

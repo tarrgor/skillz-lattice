@@ -43,6 +43,7 @@ A dependency on another issue is one line in the issue body: `Depends on #<numbe
 ## Knowledge
 
 - **Consultation**: list `.project/Knowledge/` subdirectory and file names (`ls -R .project/Knowledge`) and read only entries whose names plausibly relate to the task's area. Never read the tree wholesale; if nothing matches, skip it. Anything read (a convention, a gotcha, a past decision) is binding — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed") that your own investigation contradicts; then trust what you observe and flag the entry as stale.
+- **Researched entries**: an entry with `type: research` frontmatter (written by `research-topic`) records external sources, not observed project fact. It carries a `researched:` date and a `confidence:` level — weigh it accordingly, and treat a low-confidence or long-stale entry as a starting point to re-check rather than as binding.
 - **Governance**: any skill may add a **new** entry under `.project/Knowledge/<topic>/`. Editing or deleting an **existing** entry happens only in `project-meeting` — route contradictions and corrections through `.project/Inbox/` findings instead.
 
 ## Written deliverables
@@ -51,4 +52,4 @@ Every file these skills write — `.project/Reports/`, `Inbox/findings-*`, `Know
 
 ## Delegation
 
-`verify-implementation` is the only subagent this workflow calls for. Do the rest directly — exploring the codebase, reading issues, running builds and tests, and checking your own work are all faster as direct tool calls than as delegated agents.
+`verify-implementation` and `research-topic` are the only subagents this workflow calls for — the first for reviewer independence, the second because deep web research reads far more text than its conclusions are worth. Do the rest directly — exploring the codebase, reading issues, running builds and tests, and checking your own work are all faster as direct tool calls than as delegated agents.
