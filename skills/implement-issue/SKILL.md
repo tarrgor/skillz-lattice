@@ -7,7 +7,7 @@ description: This skill should be used to implement a single GitHub issue from a
 
 Follow this workflow end to end. Keep the user informed at important transitions, but continue autonomously unless a blocking question or unsafe repository state requires their input.
 
-Branch/slug format, base-branch rule, `Depends on #N` format, and the Knowledge discipline are defined in `../_shared/conventions.md` (relative to this skill's directory).
+Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge discipline, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Identify the issue and check for an existing implementation
 
@@ -75,7 +75,9 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 
 ## 10. Address the review findings
 
-- Findings returned: judge each one against the issue's acceptance criteria — valid and actionable, or not. For anything not actionable, note why instead of acting on it.
+This is the filter stage: the review reports for coverage, so expect low-severity and low-confidence findings among the real ones. Filtering here is the point — do not act on everything returned.
+
+- Findings returned: judge each one against the issue's acceptance criteria — valid and actionable, or not. Rank by the reported severity and confidence. For anything not actionable, note why in one line instead of acting on it.
 - For each valid finding, make the fix, then re-run the project's build/test commands; fix failures before proceeding.
 - Stale knowledge findings aren't code fixes: add them to this issue's `.project/Inbox/findings-<slug>.md` (Step 6) instead, for resolution at the next project meeting — don't edit `.project/Knowledge/` directly.
 - Commit and push the fixes to the existing branch.

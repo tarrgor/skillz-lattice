@@ -7,7 +7,7 @@ description: This skill should be used to triage and address review feedback on 
 
 Addresses review feedback on an issue that's already implemented — does not re-implement or create a new branch/PR.
 
-Branch/slug format and the Knowledge discipline are defined in `../_shared/conventions.md` (relative to this skill's directory).
+Branch/slug format, the Knowledge discipline, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Identify the issue and its branch
 

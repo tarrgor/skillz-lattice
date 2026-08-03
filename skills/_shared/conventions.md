@@ -44,3 +44,11 @@ A dependency on another issue is one line in the issue body: `Depends on #<numbe
 
 - **Consultation**: list `.project/Knowledge/` subdirectory and file names (`ls -R .project/Knowledge`) and read only entries whose names plausibly relate to the task's area. Never read the tree wholesale; if nothing matches, skip it. Anything read (a convention, a gotcha, a past decision) is binding — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed") that your own investigation contradicts; then trust what you observe and flag the entry as stale.
 - **Governance**: any skill may add a **new** entry under `.project/Knowledge/<topic>/`. Editing or deleting an **existing** entry happens only in `project-meeting` — route contradictions and corrections through `.project/Inbox/` findings instead.
+
+## Written deliverables
+
+Every file these skills write — `.project/Reports/`, `Inbox/findings-*`, `Knowledge/`, `SPEC*`, `Archive/`, `Branding/BRAND.md` — is sized to its substance. Cover what the file is for, then stop: no filler sections, no restating the same point in a summary, no boilerplate heading over an empty section. A file with nothing to say isn't written at all.
+
+## Delegation
+
+`verify-implementation` is the only subagent this workflow calls for. Do the rest directly — exploring the codebase, reading issues, running builds and tests, and checking your own work are all faster as direct tool calls than as delegated agents.

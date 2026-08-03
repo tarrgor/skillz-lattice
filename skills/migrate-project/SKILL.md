@@ -7,7 +7,7 @@ description: This skill should be used to bring an existing project that doesn't
 
 Brings an existing, non-compliant project into this workflow: inventories what exists, maps it to workflow artifacts, and migrates with the user's confirmation. Does not implement anything and does not decompose new work into issues — that stays with `create-spec-issues`.
 
-Slug/branch format, base branch, milestone commands, the `Status:` lifecycle, and the Knowledge rules are defined in `../_shared/conventions.md` (relative to this skill's directory).
+Slug/branch format, base branch, milestone commands, the `Status:` lifecycle, the Knowledge rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
 ## 1. Survey the current state
 

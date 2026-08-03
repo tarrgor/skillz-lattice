@@ -7,6 +7,8 @@ description: This skill should be used to produce or refresh a project's brand i
 
 Runs standalone, on demand. Produces or updates a brand identity guide and visual assets in `.project/Branding/` — does not touch code.
 
+Written-deliverable sizing is defined in `../_shared/conventions.md` (relative to this skill's directory).
+
 ## 1. Determine scope: full identity or partial update
 
 - Missing `.project/Branding/BRAND.md`: fresh, complete run — produce the full identity (Steps 3-7 in full).

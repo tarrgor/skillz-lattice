@@ -7,6 +7,8 @@ description: This skill should be used to run a recurring project status meeting
 
 Moderates a recurring project status meeting — does not touch code. Every decision is made with the user, one at a time — no action without explicit confirmation.
 
+Written-deliverable sizing and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+
 ## 1. Determine what's new since the last meeting
 
 - Find the most recent `.project/Archive/MEETING-<YYYY-MM-DD>.md` (newest by date in filename). Everything after its date is "since last meeting"; if none exists, this is the first meeting and everything counts.

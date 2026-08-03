@@ -7,6 +7,8 @@ description: This skill should be used when starting a brand new project (empty 
 
 Runs on an empty/near-empty project directory (new project) or to scope a new milestone in an existing codebase. Turns a rough idea into a confirmed spec — does not implement anything.
 
+Written-deliverable sizing and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+
 ## 1. Set up project files
 
 - Create if missing: `.project/Inbox/`, `.project/Archive/`, `.project/Knowledge/`, `.project/Branding/Assets/`, `.project/Reports/`.

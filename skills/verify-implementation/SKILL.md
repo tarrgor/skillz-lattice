@@ -28,17 +28,17 @@ The review must not run in the context that wrote the code — it needs both the
 
 ## 3. Review
 
-Check the diff from three angles:
+Check the diff from four angles:
 
 - **Acceptance criteria** — does the change satisfy every criterion from the issue? Note any unmet or partially met.
 - **Correctness** — logic errors, edge cases, regressions, missing or inadequate tests for the behavior change.
 - **Security** — injection, auth/authorization gaps, unsafe deserialization, committed secrets, unvalidated input, unsafe defaults, and other OWASP-class flaws.
 - **Knowledge accuracy** — does anything consulted in `.project/Knowledge/` assert a code/issue state this diff contradicts? Report it as stale, separate from the categories above.
 
-Report only concrete, verifiable findings — not stylistic preference.
+Report every issue found, including low-severity ones and ones you are uncertain about. Do not filter for importance or confidence here — the caller triages. Coverage is the goal: a finding the caller discards costs less than a real bug silently dropped. Omit only pure style or naming preference.
 
 ## 4. Report findings
 
 - Do not post to the PR. Return the findings directly to whatever invoked this skill, as the final output — that caller is responsible for anything further.
-- For each finding: the acceptance criterion or file/line it relates to, what's wrong, and why it matters. Group by acceptance criteria / correctness / security / stale knowledge.
+- For each finding: the acceptance criterion or file/line it relates to, what's wrong, why it matters, plus a severity and a confidence level so the caller can rank it. Group by acceptance criteria / correctness / security / stale knowledge.
 - No findings: say so explicitly, stating which criteria were checked.
