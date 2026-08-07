@@ -5,9 +5,29 @@ description: This skill should be used to run a recurring project status meeting
 
 # Project Meeting
 
-Moderates a recurring project status meeting — does not touch code. Every decision is made with the user, one at a time — no action without explicit confirmation.
+Moderates a recurring project status meeting — does not touch code. Decisions that shape the project are made with the user, one at a time; obvious corrections are made without asking.
 
 Written-deliverable sizing and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
+
+## What to decide alone vs. ask about
+
+Act immediately, without asking, and just report what was done:
+
+- Corrections to `.project/` documents where the document is factually wrong or out of date and the right value is unambiguous — a stale path, a renamed file, a superseded link, a `Status:` that contradicts reality, a claim the code plainly disproves.
+- Adding or rewording a line or a few lines in a spec, Knowledge entry, or meeting record to match what the project already does.
+- Discarding an Inbox finding that is already resolved, duplicated, or was purely informational.
+- Deleting or archiving a Knowledge entry that documents something no longer in the codebase.
+
+Never open an issue for work of this size — just do it.
+
+Ask the user, one topic at a time, only for:
+
+- Anything that changes project direction, scope, priority, or milestone boundaries.
+- Creating a GitHub issue (i.e. committing real implementation work).
+- Substantive spec changes: new or removed requirements, changed acceptance criteria, reversed decisions.
+- Findings with more than one defensible outcome, or where the correct fix isn't clear from the project's own material.
+
+When unsure which side a change falls on: if a competent teammate would have just fixed it, fix it.
 
 ## 1. Determine what's new since the last meeting
 
@@ -24,27 +44,29 @@ Written-deliverable sizing and the delegation rule are defined in `../_shared/co
 
 - List `.project/Knowledge/**`. Skip entries recording a pure convention or decision — nothing there to go stale. For entries asserting a specific, checkable state ("X is unfixed", "Y isn't supported yet"), re-verify against the current code or issue tracker.
 - Entries with `type: research` frontmatter rest on external sources that decay on their own schedule, so they age rather than get contradicted. Flag one when its `researched:` date is more than roughly three months old, when its `confidence:` is `low`, or when the project has since committed to a decision it informed. Do not re-run the research here — that's a Step 4 outcome.
-- Anything contradicted or flagged as aged: treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede, one at a time, same discipline.
+- Anything contradicted or flagged as aged: if the correction is unambiguous, apply it now and report it. Otherwise treat it as a finding in Step 4, alongside Inbox findings — propose update, archive, or supersede.
 - This is a full sweep, not scoped to "since last meeting" — staleness accumulates precisely in entries nobody has touched recently.
-- Also spot-check the `Active` milestone spec (`Status:` lifecycle per `../_shared/conventions.md`, relative to this skill's directory): re-verify its checkable claims about the codebase the same way. Contradictions become Step 4 findings (outcome: spec amendment). If the milestone is actually finished but the spec isn't marked, propose setting `Status: Done`.
+- Also spot-check the `Active` milestone spec (`Status:` lifecycle per `../_shared/conventions.md`, relative to this skill's directory): re-verify its checkable claims about the codebase the same way. Fix contradictions that are plainly factual; substantive contradictions become Step 4 findings (outcome: spec amendment). If the milestone is actually finished but the spec isn't marked, set `Status: Done` and say so.
 
 ## 4. Triage findings, one at a time
 
-- Process each file in `.project/Inbox/`, plus each stale Knowledge entry flagged in Step 3, individually: present it, propose an outcome, and wait for the user's decision before moving to the next finding.
+- Process each file in `.project/Inbox/`, plus each stale Knowledge entry flagged in Step 3. Sort each against the rule above:
+  - Obvious outcome → carry it out now. Collect these and report them together as a short list of what was handled, without interrupting the meeting for each one.
+  - Decision needed → present it, propose an outcome, and wait for the user before moving to the next such finding. Never batch these or decide more than one at a time.
+- Available outcomes:
   - Inbox findings: new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else.
   - Stale Knowledge entries: update the entry, archive/delete it, or leave as-is.
   - Aged research entries: leave as-is, archive it if the decision it fed is settled and it no longer informs anything, or agree to re-research it. Re-research is a recommendation to run `research-topic` after the meeting — never run it from here; it is user-invoked and needs its own scoping.
-- On confirmation, carry out exactly that outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, edit or remove the Knowledge entry, or discard — then move any consumed Inbox file to `.project/Archive/`.
-- Never batch findings or decide more than one at a time.
+- Carry out exactly the chosen outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, edit or remove the Knowledge entry, or discard — then move any consumed Inbox file to `.project/Archive/`.
 
 ## 5. Plan next steps
 
-- Discuss upcoming work, new ideas, or changes — raised by either party — one topic at a time, same discipline as Step 4.
-- Any resulting action (new issue, spec change, milestone) requires explicit confirmation before being carried out.
+- Discuss upcoming work, new ideas, or changes — raised by either party — one topic at a time.
+- These are direction decisions by nature: new issues, spec changes, and milestone changes always require explicit confirmation before being carried out.
 
 ## 6. Record the meeting
 
-Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its resolved outcome (including stale Knowledge entries corrected or removed), work completed, knowledge gained, and next steps agreed. This is the marker the next meeting's Step 1 reads from.
+Write `.project/Archive/MEETING-<YYYY-MM-DD>.md`: date, each finding and its resolved outcome (including stale Knowledge entries corrected or removed, and the changes made without asking), work completed, knowledge gained, and next steps agreed. This is the marker the next meeting's Step 1 reads from.
 
 ## 7. Commit and push
 
