@@ -20,7 +20,7 @@ Branch/slug format, the Knowledge discipline, written-deliverable sizing, and th
 - Read the original issue in full — its acceptance criteria are the triage checklist.
 - Fetch the feedback: all PR comments and unresolved review threads (`gh pr view <number> --comments`).
 - If the feedback concerns UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md`, if present, and fix against it — don't invent brand decisions the guide already made.
-- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries. A comment that contradicts a captured convention is worth flagging in the reply rather than silently following; an entry asserting a checkable state your investigation contradicts is not binding — proceed on what you observe and flag it in Step 4.
+- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries. A comment that contradicts a captured convention is worth flagging in the reply rather than silently following; an entry asserting a checkable state your investigation contradicts is not binding — proceed on what you observe and correct it in Step 4.
 
 ## 3. Triage and fix
 
@@ -31,5 +31,5 @@ Branch/slug format, the Knowledge discipline, written-deliverable sizing, and th
 
 - Commit and push the fixes to the existing branch.
 - Reply to each addressed comment confirming the fix.
-- Anything found that needs the project owner's attention (including Knowledge entries contradicted by what you observed): write `.project/Inbox/findings-<slug>.md`. Anything worth keeping for future implementations: add a new entry to `.project/Knowledge/<topic>/` — never edit or delete an existing entry here (governance per conventions); corrections go through the Inbox findings file.
+- A Knowledge entry whose claim your work disproved: correct it in place per the conventions governance rule, and note the correction in the report. Anything else needing the project owner's attention (including a contradiction you couldn't settle): write `.project/Inbox/findings-<slug>.md`. Anything worth keeping for future implementations: add a new entry to `.project/Knowledge/<topic>/`.
 - Update `.project/Reports/<slug>.md` with the new verification results.

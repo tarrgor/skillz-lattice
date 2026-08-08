@@ -31,7 +31,7 @@ Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge disc
 - Read any project instruction file (`CLAUDE.md`, `AGENTS.md`) and the relevant code/tests before acting.
 - Fetch the issue's title, body, labels, linked context, and all comments (`gh issue view <number> --comments`).
 - If the issue touches UI, styling, or any brand-facing output, also read `.project/Branding/BRAND.md` and `.project/Branding/Assets/`, if present, and implement against them (palette, typography, voice, logo/asset usage) — don't invent brand decisions the guide already made.
-- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries; what you read is binding unless a checkable claim is contradicted by your own investigation — then trust what you observe and flag the entry as stale in Step 6.
+- Consult `.project/Knowledge/`, if present, per the conventions discipline: read only name-relevant entries; what you read is binding unless a checkable claim is contradicted by your own investigation — then trust what you observe and correct the entry in Step 6.
 - Restate the acceptance criteria internally; do not implement from the title alone.
 - If something genuinely blocks a correct implementation (not resolvable from the codebase or convention), post one concise comment on the issue explaining the ambiguity, then stop and wait. Resume once answered.
 
@@ -54,8 +54,9 @@ Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge disc
 
 ## 6. Capture findings and knowledge
 
-- Anything found during implementation that needs the project owner's attention (scope gaps, follow-up work, potential new issues, risks, Knowledge entries contradicted by what you observed) — write `.project/Inbox/findings-<slug>.md` describing it, for review at the next project meeting.
-- Anything learned worth keeping for future implementations (a gotcha, a convention, an architectural decision, a reusable pattern) — write it into `.project/Knowledge/`, in a subdirectory grouped by general topic (e.g. `architecture/`, `testing/`, `tooling/`); create a new subdirectory when nothing existing fits. New entries only — never edit or delete an existing entry here (governance per conventions); contradictions go into the findings file above.
+- A Knowledge entry whose claim your own work disproved — correct it in place, per the conventions governance rule: fix the wrong claim, leave the rest of the entry alone, and record the correction in the report (Step 8). Only raise it as a finding instead when the correct value isn't unambiguous, or when fixing it would mean rewriting or deleting the entry.
+- Anything else found during implementation that needs the project owner's attention (scope gaps, follow-up work, potential new issues, risks, a Knowledge contradiction you couldn't settle) — write `.project/Inbox/findings-<slug>.md` describing it, for review at the next project meeting.
+- Anything learned worth keeping for future implementations (a gotcha, a convention, an architectural decision, a reusable pattern) — write it into `.project/Knowledge/`, in a subdirectory grouped by general topic (e.g. `architecture/`, `testing/`, `tooling/`); create a new subdirectory when nothing existing fits.
 - Skip either if nothing qualifies — don't create empty or filler files.
 
 ## 7. Publish
@@ -79,7 +80,7 @@ This is the filter stage: the review reports for coverage, so expect low-severit
 
 - Findings returned: judge each one against the issue's acceptance criteria — valid and actionable, or not. Rank by the reported severity and confidence. For anything not actionable, note why in one line instead of acting on it.
 - For each valid finding, make the fix, then re-run the project's build/test commands; fix failures before proceeding.
-- Stale knowledge findings aren't code fixes: add them to this issue's `.project/Inbox/findings-<slug>.md` (Step 6) instead, for resolution at the next project meeting — don't edit `.project/Knowledge/` directly.
+- Stale knowledge findings aren't code fixes: confirm the reviewer's claim against the code yourself, then correct the entry in place as in Step 6. If you can't confirm it, or the right value is ambiguous, add it to this issue's `.project/Inbox/findings-<slug>.md` instead.
 - Commit and push the fixes to the existing branch.
 - No findings: say so; do not re-run the review or invent work.
 
