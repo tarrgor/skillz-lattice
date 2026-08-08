@@ -9,6 +9,14 @@ Moderates a recurring project status meeting — does not touch code. Decisions 
 
 Written-deliverable sizing and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
+## What an issue is for
+
+A GitHub issue means implementation work: a change to code, tests, or shipped configuration. Nothing else is ever an issue.
+
+Editing a document is never implementation work. Any change confined to `.project/` documents, READMEs, or other prose — a spec amendment, a Knowledge correction, a reworded requirement, a new Knowledge entry — is made directly in this meeting, by editing the file. Do not open an issue for it, however large the edit or however many documents it touches. "This is a big doc change" is a reason to confirm the wording with the user, not a reason to file an issue.
+
+The one exception: an issue may exist for documentation that ships as part of the product (user-facing docs, generated API reference) when writing it is real work sized like a feature.
+
 ## What to decide alone vs. ask about
 
 Act immediately, without asking, and just report what was done:
@@ -18,13 +26,13 @@ Act immediately, without asking, and just report what was done:
 - Discarding an Inbox finding that is already resolved, duplicated, or was purely informational.
 - Deleting or archiving a Knowledge entry that documents something no longer in the codebase.
 
-Never open an issue for work of this size — just do it.
+Just do these — no issue, no confirmation.
 
 Ask the user, one topic at a time, only for:
 
 - Anything that changes project direction, scope, priority, or milestone boundaries.
 - Creating a GitHub issue (i.e. committing real implementation work).
-- Substantive spec changes: new or removed requirements, changed acceptance criteria, reversed decisions.
+- Substantive spec changes: new or removed requirements, changed acceptance criteria, reversed decisions. Confirmation is about the wording and the direction — once agreed, edit the document here.
 - Findings with more than one defensible outcome, or where the correct fix isn't clear from the project's own material.
 
 When unsure which side a change falls on: if a competent teammate would have just fixed it, fix it.
@@ -54,7 +62,7 @@ When unsure which side a change falls on: if a competent teammate would have jus
   - Obvious outcome → carry it out now. Collect these and report them together as a short list of what was handled, without interrupting the meeting for each one.
   - Decision needed → present it, propose an outcome, and wait for the user before moving to the next such finding. Never batch these or decide more than one at a time.
 - Available outcomes:
-  - Inbox findings: new issue, amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else.
+  - Inbox findings: new issue (only if the finding requires a code change), amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else. A finding whose whole remedy is "write this down" or "correct this document" takes the amendment outcome, never the issue outcome.
   - Stale Knowledge entries: update the entry, archive/delete it, or leave as-is.
   - Aged research entries: leave as-is, archive it if the decision it fed is settled and it no longer informs anything, or agree to re-research it. Re-research is a recommendation to run `research-topic` after the meeting — never run it from here; it is user-invoked and needs its own scoping.
 - Carry out exactly the chosen outcome — create the issue using the same conventions as `create-spec-issues`, amend the relevant spec, edit or remove the Knowledge entry, or discard — then move any consumed Inbox file to `.project/Archive/`.
