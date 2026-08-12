@@ -37,6 +37,16 @@ Ask the user, one topic at a time, only for:
 
 When unsure which side a change falls on: if a competent teammate would have just fixed it, fix it.
 
+## How to present something the user must decide
+
+The user did not write the implementation and cannot judge a decision phrased in terms of it. Present every decision so it can be answered without reading the code.
+
+- Lead with what is at stake for the project — what breaks, what gets slower, what a user of the product would notice — not with the mechanism that causes it.
+- Name files, functions, types, and identifiers only when the user needs them to answer; one is usually enough as a pointer, and never as the explanation itself.
+- Expand any term the project itself invented, or that only someone who read the implementation would know, the first time it appears.
+- Give the options as concrete consequences ("we accept slower startup" / "we spend an issue on it"), each with its cost, and state a recommendation.
+- Keep it to a few sentences. Offer the technical detail as a follow-up the user can ask for, rather than including it up front.
+
 ## 1. Determine what's new since the last meeting
 
 - Find the most recent `.project/Archive/MEETING-<YYYY-MM-DD>.md` (newest by date in filename). Everything after its date is "since last meeting"; if none exists, this is the first meeting and everything counts.
@@ -60,7 +70,7 @@ When unsure which side a change falls on: if a competent teammate would have jus
 
 - Process each file in `.project/Inbox/`, plus each stale Knowledge entry flagged in Step 3. Sort each against the rule above:
   - Obvious outcome → carry it out now. Collect these and report them together as a short list of what was handled, without interrupting the meeting for each one.
-  - Decision needed → present it, propose an outcome, and wait for the user before moving to the next such finding. Never batch these or decide more than one at a time.
+  - Decision needed → present it per "How to present something the user must decide", propose an outcome, and wait for the user before moving to the next such finding. Never batch these or decide more than one at a time.
 - Available outcomes:
   - Inbox findings: new issue (only if the finding requires a code change), amendment to `.project/SPEC.md` or the active `.project/SPEC-milestone-*.md`, no action, or something else. A finding whose whole remedy is "write this down" or "correct this document" takes the amendment outcome, never the issue outcome.
   - Stale Knowledge entries: update the entry, archive/delete it, or leave as-is.
