@@ -34,7 +34,7 @@ Present the final subtopic list, what's being skipped as already known, and the 
 
 Web research reads far more text than its conclusions are worth — keep it out of the main conversation.
 
-- `agents/research-topic.md` installed: launch **one `research-topic` subagent per subtopic**, all in a single message so they run in parallel (`subagent_type: research-topic`, `run_in_background: false`). Give each one its subtopic, the decision it feeds, the boundaries, and what the project already knows so it doesn't re-derive it.
+- `agents/research-topic.md` installed: launch **one `research-topic` subagent per subtopic**, all in a single message so they run in parallel (`subagent_type: research-topic`, `run_in_background: false`). Give each one its subtopic, the decision it feeds, the boundaries, and what the project already knows so it doesn't re-derive it — **as text in the brief, never as a path**. The subagent holds no tool that can read a local file (`agents/research-topic.md` says why: it ingests untrusted pages, so nothing local is within its reach to send back out), and Step 2 has already read those entries. Paste the established claims that bound this subtopic; leave out the sourcing and anything belonging to another subtopic, and summarise an entry too long to paste rather than naming it. What goes into a brief goes out to a fetched page's reach.
 - Not installed: do the research directly, per the source discipline below.
 - Already running as that subagent: research the assigned subtopic per the source discipline below, return the findings in full, and stop — Steps 5-7 belong to the caller.
 
