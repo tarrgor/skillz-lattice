@@ -32,8 +32,8 @@ skills/                         shared workflow skills
   <skill>/
     SKILL.md
     agents/openai.yaml          only where Codex App metadata/policy is useful
-agents/claude/                  Claude Code manifests
-agents/codex/                   Codex custom-agent TOML sources
+agents/*.md                     unchanged Claude Code manifests
+agents/codex/                   additive Codex custom-agent TOML sources
 install.sh                      macOS/Linux/WSL installer
 install.ps1                     native Windows installer
 tests/                          static and installer checks
@@ -58,7 +58,7 @@ Codex targets:
    - normal-checkout versus existing-worktree Git procedures;
    - host-specific invocation labels (Claude Code, Codex App, Codex CLI).
 2. Keep workflow semantics in the existing skills. Host adapters may translate invocation, paths, and sandbox controls only; they must not change issue, spec, review, or approval policy.
-3. Make `AGENTS.md` self-contained for the essential repository rules. Keep `CLAUDE.md` as the Claude entry point and ensure both point to one canonical guidance document, or validate that deliberately duplicated short rules remain identical.
+3. Preserve the existing `AGENTS.md` -> `CLAUDE.md` indirection because Codex follows that instruction and changing the bootstrap would alter the established Claude contract. Pin both files in the Claude compatibility regression test.
 4. Record supported environments explicitly:
    - Claude Code on macOS/Linux as the regression baseline;
    - Codex App on Windows 11 with the native PowerShell agent as the primary new target;
@@ -92,7 +92,7 @@ Exit criteria: a static scan finds no unlabelled Claude API call or POSIX-only o
    - research-only instructions, source discipline, prompt-injection handling, and an explicit ban on reading local project/user files;
    - `sandbox_mode = "read-only"` to prevent mutation;
    - only documented MCP configuration that is truly required and broadly available. Do not bake in optional services such as Context7.
-3. Preserve the Claude manifests under `agents/claude/` and teach both installers the new layout. Provide a temporary compatibility path or migration step so existing Claude installations do not silently break.
+3. Preserve the Claude manifests byte-for-byte under `agents/*.md`; add Codex manifests under `agents/codex/`. Do not require an existing Claude installation to migrate paths.
 4. Change the shared skills to degrade honestly when the named agent is not installed: run locally only where the workflow already allows it, and state when independent context or isolation is unavailable.
 
 Security decision required during implementation: Codex's documented custom-agent schema does not currently establish the Claude research agent's web-only tool boundary. The recommended first release is functional parity with a read-only sandbox plus explicit no-local-read instructions, accompanied by a prominent limitation. If a hard technical no-local-read guarantee is mandatory, build the research step as a separate MCP/API service or another externally sandboxed process and do not call the policy-only agent equivalent.
@@ -110,7 +110,7 @@ Exit criteria: Codex can discover both custom agents, the review agent cannot wr
    - real file/directory: never overwrite, even with `-Force`;
    - dry run: perform no filesystem mutation.
 5. Make replacement recoverable and narrow. Resolve and validate every destination beneath the selected install root before removing an old link.
-6. Extend `install.sh` with the same target model and Codex agent installation. Keep current flags compatible.
+6. Preserve `install.sh` byte-for-byte as the Claude regression baseline. Add a separate `install-codex.sh` for macOS/Linux/WSL so new behavior cannot change the existing installer contract.
 7. Add a `verify-install` mode or companion script that reports discovered skills, agent manifests, broken links, and the expected restart/reload action without changing anything.
 
 Exit criteria: repeated install and dry-run tests pass in temporary directories on Windows and Linux; real user-owned directories are never clobbered.

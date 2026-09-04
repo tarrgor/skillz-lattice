@@ -2,6 +2,8 @@
 
 Shared rules for all skills in this workflow. Skills reference this file as `../_shared/conventions.md` relative to their own directory.
 
+Host-specific subagent, shell, and worktree mappings are defined in `runtime-adapters.md` beside this file. Read that file when the current step delegates work, gives an OS-specific command, or runs inside a linked worktree.
+
 ## Branches and slugs
 
 - `<slug>` = `<issue-number>-<kebab-title>` (e.g. `12-add-login`).
@@ -44,11 +46,11 @@ A dependency on another issue is one line in the issue body: `Depends on #<numbe
 
 `Inbox/`, `Archive/`, `Knowledge/`, `Reports/`, `Branding/Assets/`.
 
-Any skill writing into `.project/` creates that whole set if missing (`mkdir -p`), not just the one directory it needs — the layout is then identical whichever skill reaches the project first, and later skills find what they expect. Spec files are never pre-created as empty placeholders; the `Status:` lifecycle reads them. Root `CLAUDE.md` and `AGENTS.md` are `kick-off`'s alone — no other skill creates them.
+Any skill writing into `.project/` creates that whole set if missing, not just the one directory it needs — the layout is then identical whichever skill reaches the project first, and later skills find what they expect. Use the host-native directory operation from `runtime-adapters.md`. Spec files are never pre-created as empty placeholders; the `Status:` lifecycle reads them. Root `CLAUDE.md` and `AGENTS.md` are `kick-off`'s alone — no other skill creates them.
 
 ## Knowledge
 
-- **Consultation**: list `.project/Knowledge/` subdirectory and file names (`ls -R .project/Knowledge`) and read only entries whose names plausibly relate to the task's area. Never read the tree wholesale; if nothing matches, skip it. Anything read (a convention, a gotcha, a past decision) is binding — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed") that your own investigation contradicts; then trust what you observe and flag the entry as stale.
+- **Consultation**: list `.project/Knowledge/` subdirectory and file names with the current host's native file-search capability (see `runtime-adapters.md`) and read only entries whose names plausibly relate to the task's area. Never read the tree wholesale; if nothing matches, skip it. Anything read (a convention, a gotcha, a past decision) is binding — unless it asserts a specific, checkable state of the code or an issue (e.g. "bug X is unfixed") that your own investigation contradicts; then trust what you observe and flag the entry as stale.
 - **Researched entries**: an entry with `type: research` frontmatter (written by `research-topic`) records external sources, not observed project fact. It carries a `researched:` date and a `confidence:` level — weigh it accordingly, and treat a low-confidence or long-stale entry as a starting point to re-check rather than as binding.
 - **Governance**: any skill may add a **new** entry under `.project/Knowledge/<topic>/`. It may also correct a claim in an **existing** entry in place, without asking, when its own investigation disproves that claim and the correct value is unambiguous — fix the wrong claim, leave the rest of the entry untouched, and note the correction in the report or findings file it is already writing. Everything else — deleting an entry, rewriting or restructuring it, or a contradiction you cannot settle by observation — goes through `.project/Inbox/` findings for `project-meeting` to resolve.
 
@@ -59,3 +61,5 @@ Every file these skills write — `.project/Reports/`, `Inbox/findings-*`, `Know
 ## Delegation
 
 `verify-implementation` and `research-topic` are the only subagents this workflow calls for — the first for reviewer independence, the second because deep web research reads far more text than its conclusions are worth. Do the rest directly — exploring the codebase, reading issues, running builds and tests, and checking your own work are all faster as direct tool calls than as delegated agents.
+
+Invoke them using the current host mapping in `runtime-adapters.md`. Codex's research agent uses a read-only sandbox and a behavioral no-local-read rule; unlike the Claude manifest's web-only tool allowlist, this is not a technical local-read boundary. Never describe the two isolation levels as equivalent.

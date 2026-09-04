@@ -7,19 +7,21 @@ description: This skill should be used to review a pull request produced by impl
 
 Reviews a finished implementation against its issue — does not implement or fix anything.
 
+Use `../_shared/runtime-adapters.md` for host-specific subagent and file-listing behavior.
+
 ## 0. Review in a fresh context
 
 The review must not run in the context that wrote the code — it needs both the independence and the context isolation.
 
 - **Already running as the `verify-implementation` agent** (the subagent preloads this skill), or `agents/verify-implementation.md` is not installed: do the review here, starting at Step 1.
-- **Otherwise** — invoked directly by the user, or from another skill: delegate. Launch it with the Agent tool (`subagent_type: verify-implementation`, `run_in_background: false`), passing the issue number and the PR number, then report its findings back per Step 4. Do not read the diff yourself first.
+- **Otherwise** — invoked directly by the user, or from another skill: delegate to the named review agent using the current host mapping. Under Claude Code, retain the Agent-tool invocation (`subagent_type: verify-implementation`, `run_in_background: false`). Under Codex, spawn the installed `verify_implementation` custom agent. Pass the issue and PR numbers, wait for its final result, then report its findings per Step 4. Do not read the diff yourself first.
 
 ## 1. Identify the issue and its PR
 
 - Identify the GitHub issue by number. If genuinely unclear, ask.
 - Find the PR whose head branch is `issue/<issue-number>-*` (`gh pr list --search "head:issue/<issue-number>-"`, or `gh pr view <number>` if the PR number is already known; convention: `../_shared/conventions.md`). Read the linked issue in full.
 - Note the acceptance criteria specifically — they're the review's checklist.
-- Consult `.project/Knowledge/`, if present: list its subdirectory and file names (`ls -R .project/Knowledge`) and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. A captured convention the diff violates is a valid finding — so is an entry whose asserted code/issue state (e.g. "unfixed", "not yet supported") this diff now contradicts; report that as stale knowledge rather than silently ignoring it.
+- Consult `.project/Knowledge/`, if present: list its subdirectory and file names using the host-native operation from `runtime-adapters.md`, and read only the entries whose names plausibly relate to this issue's area. Never read the tree wholesale; if nothing matches, skip it. A captured convention the diff violates is a valid finding — so is an entry whose asserted code/issue state (e.g. "unfixed", "not yet supported") this diff now contradicts; report that as stale knowledge rather than silently ignoring it.
 
 ## 2. Gather the diff
 

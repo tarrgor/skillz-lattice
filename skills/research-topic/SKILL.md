@@ -9,6 +9,8 @@ Researches one topic against external sources and writes what was learned into `
 
 The `.project/` layout, the Knowledge consultation and governance rules, the base-branch and committing rules, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
+Use `../_shared/runtime-adapters.md` for host-specific file listing, date, and subagent invocation.
+
 ## 1. Scope the research with the user
 
 Research without a scope returns an encyclopedia. Before anything else, establish:
@@ -22,7 +24,7 @@ Ask one question at a time and propose a recommended answer for each. Skip anyth
 ## 2. Check what the project already knows
 
 - Create the `.project/` directories if missing, per the layout in `../_shared/conventions.md` — research can precede `kick-off` on an empty project, and the layout must not depend on which skill ran first.
-- `ls -R .project/Knowledge`. Pick the target topic directory: reuse an existing one whose name fits, create a new one only when nothing does.
+- List `.project/Knowledge` with the host-native operation from `runtime-adapters.md`. Pick the target topic directory: reuse an existing one whose name fits, create a new one only when nothing does.
 - Read the entries in that directory plus any others whose names relate to the topic. Note both what's already established and when it was researched.
 - Drop or narrow any subtopic already answered — research the gaps, not the basics. If everything in scope is already covered, say so and stop rather than producing a near-duplicate entry.
 
@@ -34,7 +36,8 @@ Present the final subtopic list, what's being skipped as already known, and the 
 
 Web research reads far more text than its conclusions are worth — keep it out of the main conversation.
 
-- `agents/research-topic.md` installed: launch **one `research-topic` subagent per subtopic**, all in a single message so they run in parallel (`subagent_type: research-topic`, `run_in_background: false`). Give each one its subtopic, the decision it feeds, the boundaries, and what the project already knows so it doesn't re-derive it — **as text in the brief, never as a path**. The subagent holds no tool that can read a local file (`agents/research-topic.md` says why: it ingests untrusted pages, so nothing local is within its reach to send back out), and Step 2 has already read those entries. Paste the established claims that bound this subtopic; leave out the sourcing and anything belonging to another subtopic, and summarise an entry too long to paste rather than naming it. What goes into a brief goes out to a fetched page's reach.
+- A matching research agent is installed: launch **one `research-topic` subagent per subtopic**, all together so they run in parallel, using the current host mapping in `runtime-adapters.md`. Under Claude Code, retain `subagent_type: research-topic` and `run_in_background: false`. Under Codex, use the installed `research_topic` custom agent for each spawned research task. Give each one its subtopic, the decision it feeds, the boundaries, and what the project already knows so it doesn't re-derive it — **as text in the brief, never as a path**. Step 2 has already read those entries. Paste the established claims that bound this subtopic; leave out the sourcing and anything belonging to another subtopic, and summarise an entry too long to paste rather than naming it. What goes into a brief goes out to a fetched page's reach.
+- Claude Code's `agents/research-topic.md` technically limits the agent to web/research tools. Codex's custom agent is read-only and instructed not to read local data, but its documented configuration does not provide the same per-agent web-only allowlist. Do not claim equivalent isolation; if strict local-read prevention is required, stop and require an externally isolated research service.
 - Not installed: do the research directly, per the source discipline below.
 - Already running as that subagent: research the assigned subtopic per the source discipline below, return the findings in full, and stop — Steps 5-7 belong to the caller.
 
@@ -55,7 +58,7 @@ Frontmatter marks it as researched rather than observed, so later readers weigh 
 ```markdown
 ---
 type: research
-researched: <YYYY-MM-DD>   # from `date +%F`, never guessed
+researched: <YYYY-MM-DD>   # current local date from the runtime adapter, never guessed
 confidence: high | medium | low
 ---
 ```
