@@ -9,6 +9,8 @@ Follow this workflow end to end. Keep the user informed at important transitions
 
 Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge discipline, written-deliverable sizing, and the delegation rule are defined in `../_shared/conventions.md` (relative to this skill's directory).
 
+Read `../_shared/runtime-adapters.md` before branch setup or subagent invocation. Preserve the Claude Code path described there; use the Codex path only when running under Codex.
+
 ## 1. Identify the issue and check for an existing implementation
 
 - Identify the GitHub issue by number. If genuinely unclear, ask.
@@ -16,15 +18,16 @@ Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge disc
 - **Found one** — this issue is already implemented. Stop and tell the user to use the `check-pr-comments` skill instead; do not refresh the base branch, create a branch, or touch the existing one.
 - **Found nothing** — check for blockers: if the issue body contains `Depends on #<number>` lines, check each blocker's state (`gh issue view <n> --json state`). Any still open — stop, list the open blockers, and offer to implement one of them instead. All closed (or none listed) — continue to Step 2 as a fresh implementation.
 
-## 2. Determine and refresh the base branch
+## 2. Determine the checkout mode and refresh the base
 
-- `git fetch` first. Check `git status`, current branch, and remotes. Never discard, stash, or sweep in unrelated user changes without explicit permission — if uncommitted changes make switching branches unsafe, stop and ask.
+- `git fetch` first. Check `git status`, current branch, remotes, and whether this is a linked worktree (per `runtime-adapters.md`). Never discard, stash, or sweep in unrelated user changes without explicit permission — if uncommitted changes make branch setup unsafe, stop and ask.
 - The base branch follows the shared convention: `develop` if it exists, else the repository's default branch. Single-branch projects are supported — don't create `develop` yourself.
-- Update it with a fast-forward-only pull:
+- In a normal checkout, update it with a fast-forward-only pull:
   ```bash
   git switch <base>
   git pull --ff-only
   ```
+- In an existing linked worktree, do not switch another checkout or create a nested worktree. Fetch and verify the intended base ref. A detached `HEAD` is expected in a Codex-created worktree.
 
 ## 3. Review the issue
 
@@ -37,11 +40,12 @@ Branch/slug format, base-branch rule, `Depends on #N` format, the Knowledge disc
 
 ## 4. Create the branch
 
-- Branch from the freshly updated base branch, never using a worktree:
+- In a normal checkout, branch from the freshly updated base branch:
   ```bash
   git switch -c issue/<slug>
   ```
   `<slug>` is `<issue-number>-<kebab-title>` (per conventions).
+- In an existing linked worktree, keep the worktree and create the issue branch there. If detached, create it directly from the verified remote/base ref (for example `git switch -c issue/<slug> origin/<base>`). If already on the intended issue branch, continue; if on another branch or dirty in a way that makes the correct base ambiguous, stop and ask.
 - Don't reset or overwrite an existing branch of that name — Step 1 already handles the case where one exists.
 
 ## 5. Implement and verify
@@ -71,7 +75,7 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 
 ## 9. Independent review
 
-- Launch the `verify-implementation` agent as a subagent (Agent tool, `subagent_type: verify-implementation`, `run_in_background: false`) so it reviews with its own fresh context. Give it the issue number and the PR number.
+- Launch the `verify-implementation` agent as a subagent so it reviews with its own fresh context. Give it the issue number and PR number. Under Claude Code, retain the existing Agent-tool invocation (`subagent_type: verify-implementation`, `run_in_background: false`). Under Codex, spawn the installed `verify_implementation` custom agent using the mapping in `runtime-adapters.md`.
 - Wait for it to finish — do not proceed, merge, or report done while it is running. It returns its findings directly in its final message; it does not post to the PR.
 
 ## 10. Address the review findings
