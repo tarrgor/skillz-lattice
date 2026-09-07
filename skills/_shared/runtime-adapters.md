@@ -8,6 +8,21 @@ Use the current host's native capabilities. These mappings change invocation and
 - **Codex:** spawn the matching custom agent with the collaboration/subagent capability, explicitly tell it to use the corresponding `$verify-implementation` or `$research-topic` skill, pass the complete brief, and wait for its final result before continuing. The Codex custom-agent names are `verify_implementation` and `research_topic`; their source files live in `agents/codex/`.
 - If the named agent is unavailable, follow the fallback in the calling skill. Never claim independent review or isolated context when the work ran in the caller.
 
+## Model selection
+
+A skill may recommend a model per complexity tier; it can never set one. Neither host lets a running session switch its own model — the session model is the user's choice (`/model`, or the host's model picker). Only subagent invocations carry a model of their own, and this workflow does not implement issues in subagents.
+
+| Tier | Claude Code | Codex |
+|---|---|---|
+| Low | Sonnet | Terra |
+| Medium | Opus 5 | Sol |
+| High | Opus 5 | Astra |
+| Exceptional | Fable | Astra |
+
+Astra is the routine choice for Codex's hard tier; Fable is reserved for genuinely exceptional work on Claude Code. If the host offers a reasoning-effort setting, raise it with the tier rather than reaching for a larger model.
+
+Name the recommendation and let the user act on it. Never state or imply that a model was switched.
+
 ## Shell and filesystem
 
 - Prefer the host's file-search and file-editing tools over shell-specific pipelines.
