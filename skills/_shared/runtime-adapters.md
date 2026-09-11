@@ -5,7 +5,7 @@ Use the current host's native capabilities. These mappings change invocation and
 ## Subagents
 
 - **Claude Code:** use the existing `Agent` tool with the requested `subagent_type` and wait synchronously, exactly as the calling skill specifies.
-- **Codex:** spawn the matching custom agent with the collaboration/subagent capability, explicitly tell it to use the corresponding `$verify-implementation` or `$research-topic` skill, pass the complete brief, and wait for its final result before continuing. The Codex custom-agent names are `verify_implementation` and `research_topic`; their source files live in `agents/codex/`.
+- **Codex:** spawn the matching custom agent with the collaboration/subagent capability, explicitly tell it to use the corresponding `$verify-implementation` or `$research-topic` skill, pass the complete brief, and wait for its final result before continuing. The Codex custom agents are named `verify-implementation` and `research-topic` — the same names Claude Code uses; their source files live in `agents/codex/`.
 - If the named agent is unavailable, follow the fallback in the calling skill. Never claim independent review or isolated context when the work ran in the caller.
 
 ## Model selection

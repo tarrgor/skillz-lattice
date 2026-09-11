@@ -75,7 +75,7 @@ Write `.project/Reports/<slug>.md` — a short report of what was implemented an
 
 ## 9. Independent review
 
-- Launch the `verify-implementation` agent as a subagent so it reviews with its own fresh context. Give it the issue number and PR number. Under Claude Code, retain the existing Agent-tool invocation (`subagent_type: verify-implementation`, `run_in_background: false`). Under Codex, spawn the installed `verify_implementation` custom agent using the mapping in `runtime-adapters.md`.
+- Launch the `verify-implementation` agent as a subagent so it reviews with its own fresh context. Give it the issue number and PR number. Under Claude Code, retain the existing Agent-tool invocation (`subagent_type: verify-implementation`, `run_in_background: false`). Under Codex, spawn the installed `verify-implementation` custom agent using the mapping in `runtime-adapters.md`.
 - Wait for it to finish — do not proceed, merge, or report done while it is running. It returns its findings directly in its final message; it does not post to the PR.
 
 ## 10. Address the review findings

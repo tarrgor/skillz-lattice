@@ -5,7 +5,7 @@ import tomllib
 
 repo_root = Path(__file__).resolve().parent.parent
 agent_files = sorted((repo_root / "agents" / "codex").glob("*.toml"))
-expected_names = {"research_topic", "verify_implementation"}
+expected_names = {"research-topic", "verify-implementation"}
 errors: list[str] = []
 names: set[str] = set()
 
