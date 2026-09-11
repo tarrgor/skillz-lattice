@@ -16,10 +16,10 @@ A skill may recommend a model per complexity tier; it can never set one. Neither
 |---|---|---|
 | Low | Sonnet | Terra |
 | Medium | Opus 5 | Sol |
-| High | Opus 5 | Astra |
+| High | Opus 5 | Sol |
 | Exceptional | Fable | Astra |
 
-Astra is the routine choice for Codex's hard tier; Fable is reserved for genuinely exceptional work on Claude Code. If the host offers a reasoning-effort setting, raise it with the tier rather than reaching for a larger model.
+Astra and Fable are reserved for genuinely exceptional work; Sol carries ordinary coding issues up to and including the High tier. If the host offers a reasoning-effort setting, raise it with the tier rather than reaching for a larger model.
 
 Name the recommendation and let the user act on it. Never state or imply that a model was switched.
 

@@ -39,12 +39,14 @@ Assign one tier:
 
 Estimate the *implementation*, not the wording of the issue: a one-line issue over an intricate subsystem is not a Low.
 
+**3D override**: if the work includes 3D modelling or geometry authoring — Blender/`bpy` scripting, mesh or scene generation, shaders, spatial maths — recommend Astra on Codex regardless of tier, and say the 3D work is why.
+
 ## 3. Report and hand over
 
 Report in a few lines, no file written:
 
 - the tier, and the two or three signals that decided it — name the actual files, risks, or gaps;
-- the recommended model for this host, per `runtime-adapters.md`;
+- the recommended model for this host, per `runtime-adapters.md` unless the 3D override applies;
 - anything the implementer should know up front: an ambiguity worth clarifying on the issue first, an open `Depends on #N` blocker, or a Knowledge entry that applies.
 
 Recommend the model; never claim to have switched it. Switching the session model is the user's action.
