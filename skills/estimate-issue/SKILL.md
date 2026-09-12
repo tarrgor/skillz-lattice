@@ -39,7 +39,7 @@ Assign one tier:
 
 Estimate the *implementation*, not the wording of the issue: a one-line issue over an intricate subsystem is not a Low.
 
-**3D override**: if the work includes 3D modelling or geometry authoring — Blender/`bpy` scripting, mesh or scene generation, shaders, spatial maths — recommend Astra on Codex regardless of tier, and say the 3D work is why.
+**3D override**: if the work includes asset authoring in Blender — modelling, materials, lighting, or `bpy` build scripts that produce them — recommend Astra on Codex regardless of tier, and say the Blender work is why. Engine-side code that only uses 3D coordinates (cameras, transforms, collision queries, placement) does not trigger it; estimate that by tier.
 
 ## 3. Report and hand over
 
