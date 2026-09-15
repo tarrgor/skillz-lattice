@@ -41,12 +41,14 @@ Estimate the *implementation*, not the wording of the issue: a one-line issue ov
 
 **3D override**: if the work includes asset authoring in Blender — modelling, materials, lighting, or `bpy` build scripts that produce them — recommend Astra on Codex regardless of tier, and say the Blender work is why. Engine-side code that only uses 3D coordinates (cameras, transforms, collision queries, placement) does not trigger it; estimate that by tier.
 
+**ChatGPT Image override**: if the work includes generating images with a ChatGPT Image model (concepts, references, modeling sheets), recommend Sol on Codex regardless of tier, and say the image generation is why — Codex has ChatGPT Image generation built in, Claude Code does not. Skip it when the user or the issue names a different generation route (e.g. the Higgsfield CLI); then estimate by tier. The 3D override takes precedence when both apply, since Astra on Codex can generate the images as well.
+
 ## 3. Report and hand over
 
 Report in a few lines, no file written:
 
 - the tier, and the two or three signals that decided it — name the actual files, risks, or gaps;
-- the recommended model for this host, per `runtime-adapters.md` unless the 3D override applies;
+- the recommended model for this host, per `runtime-adapters.md` unless the 3D or ChatGPT Image override applies;
 - anything the implementer should know up front: an ambiguity worth clarifying on the issue first, an open `Depends on #N` blocker, or a Knowledge entry that applies.
 
 Recommend the model; never claim to have switched it. Switching the session model is the user's action.
