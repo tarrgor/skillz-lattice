@@ -109,7 +109,7 @@ If PowerShell blocks the installer, inspect the current policy with `Get-Executi
 ./install-codex.sh --uninstall
 ```
 
-This links skills into `~/.agents/skills` and Codex custom agents into `~/.codex/agents`. Under Windows, WSL2 uses its Linux home by default; it does not automatically share the native `%USERPROFILE%\.codex` configuration.
+This links skills into `~/.agents/skills` and copies Codex custom agents into `~/.codex/agents` — Codex refuses symlinked agent files, so re-run the installer after pulling agent changes. Only files carrying the skillz-lattice managed header are updated or removed; symlinks left by earlier installs are replaced with copies. Under Windows, WSL2 uses its Linux home by default; it does not automatically share the native `%USERPROFILE%\.codex` configuration.
 
 ## Host compatibility
 

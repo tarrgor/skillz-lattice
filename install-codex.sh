@@ -82,7 +82,50 @@ remove_item() {
   skipped=$((skipped + 1))
 }
 
+MANAGED_HEADER="# Managed by skillz-lattice; local edits to installed copies may be replaced."
+
+# Codex refuses symlinked agent role files (ELOOP), so agents are copied.
+is_managed_file() {
+  [[ -f "$1" && ! -L "$1" && "$(head -n 1 "$1")" == "$MANAGED_HEADER" ]]
+}
+
+copy_item() {
+  local src="$1" dest="$2"
+  if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
+    echo "replace  $dest (symlink from an earlier install)"
+    run rm "$dest"
+  elif [[ -e "$dest" || -L "$dest" ]]; then
+    if [[ ! -L "$dest" ]] && cmp -s "$src" "$dest"; then
+      echo "ok       $dest"
+      return
+    fi
+    if ! is_managed_file "$dest"; then
+      echo "skip     $dest is not managed by skillz-lattice; remove it yourself" >&2
+      skipped=$((skipped + 1))
+      return
+    fi
+    echo "update   $dest"
+  else
+    echo "copy     $dest"
+  fi
+  run cp "$src" "$dest"
+  copied=$((copied + 1))
+}
+
+remove_copy() {
+  local src="$1" dest="$2"
+  if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]] || is_managed_file "$dest"; then
+    echo "remove   $dest"
+    run rm "$dest"
+    removed=$((removed + 1))
+  elif [[ -e "$dest" || -L "$dest" ]]; then
+    echo "skip     $dest is not managed by skillz-lattice" >&2
+    skipped=$((skipped + 1))
+  fi
+}
+
 linked=0
+copied=0
 skipped=0
 removed=0
 if [[ $uninstall -eq 0 ]]; then
@@ -103,11 +146,11 @@ done
 for agent_src in "$AGENTS_DIR"/*.toml; do
   [[ -f "$agent_src" ]] || continue
   if [[ $uninstall -eq 1 ]]; then
-    remove_item "$agent_src" "$AGENTS_TARGET/$(basename "$agent_src")"
+    remove_copy "$agent_src" "$AGENTS_TARGET/$(basename "$agent_src")"
   else
-    link_item "$agent_src" "$AGENTS_TARGET/$(basename "$agent_src")"
+    copy_item "$agent_src" "$AGENTS_TARGET/$(basename "$agent_src")"
   fi
 done
 
 echo
-echo "linked: $linked  removed: $removed  skipped: $skipped$([[ $dry_run -eq 1 ]] && echo "  (dry run)")"
+echo "linked: $linked  copied: $copied  removed: $removed  skipped: $skipped$([[ $dry_run -eq 1 ]] && echo "  (dry run)")"

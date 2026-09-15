@@ -23,10 +23,25 @@ esac
 
 HOME="$test_root/codex" "$repo_dir/install-codex.sh" >/dev/null
 [[ -L "$test_root/codex/.agents/skills/kick-off" ]]
-[[ -L "$test_root/codex/.codex/agents/verify-implementation.toml" ]]
+agent="$test_root/codex/.codex/agents/verify-implementation.toml"
+# Codex rejects symlinked agent role files, so they must be real copies.
+[[ -f "$agent" && ! -L "$agent" ]]
+cmp -s "$repo_dir/agents/codex/verify-implementation.toml" "$agent"
 
-HOME="$test_root/codex" "$repo_dir/install-codex.sh" --uninstall >/dev/null
+# An earlier install's symlink is migrated to a copy.
+rm "$agent" && ln -s "$repo_dir/agents/codex/verify-implementation.toml" "$agent"
+HOME="$test_root/codex" "$repo_dir/install-codex.sh" >/dev/null
+[[ -f "$agent" && ! -L "$agent" ]]
+
+# A user-owned agent file is never overwritten or removed.
+user_agent="$test_root/codex/.codex/agents/research-topic.toml"
+echo '# user-owned agent' > "$user_agent"
+HOME="$test_root/codex" "$repo_dir/install-codex.sh" --force >/dev/null 2>&1
+grep -q 'user-owned' "$user_agent"
+
+HOME="$test_root/codex" "$repo_dir/install-codex.sh" --uninstall >/dev/null 2>&1
 [[ ! -e "$test_root/codex/.agents/skills/kick-off" ]]
-[[ ! -e "$test_root/codex/.codex/agents/verify-implementation.toml" ]]
+[[ ! -e "$agent" ]]
+grep -q 'user-owned' "$user_agent"
 
 echo "POSIX installer tests passed."
